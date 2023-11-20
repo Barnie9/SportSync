@@ -23,7 +23,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
-    @Autowired
     private UserDetailsService userDetailsService;
 
     @Bean
