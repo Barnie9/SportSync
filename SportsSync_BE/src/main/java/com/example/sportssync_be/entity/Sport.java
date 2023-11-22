@@ -1,4 +1,4 @@
-package com.example.sportssync_be.entities;
+package com.example.sportssync_be.entity;
 
 import jakarta.persistence.*;
 
