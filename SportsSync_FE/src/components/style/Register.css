@@ -1,0 +1,46 @@
+body{
+    height: 100vh;
+}    
+
+
+#root{
+    background-image: url("../images/TerenFotbal.png");
+    background-position:bottom; /* Center the image */
+
+    min-height: 100%;
+}
+
+.container{
+    width: 500px;
+    display:flex;
+    flex-direction: column;
+    margin:auto;
+}
+.register-title{
+    text-align: center;
+}
+.username-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.register-button{
+    cursor:pointer;
+    border: 1px solid gray;
+    width: 250px;
+    height: 30px;
+    border-radius: 10px 10px 10px 10px;
+        
+}
+.register-button:hover{
+    background-color: lightblue;
+}
+.username-label input {
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid gray;
+}
+.username-label input:hover{
+    border: 2px solid gray;
+}

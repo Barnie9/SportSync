@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
+import './style/Register.css';
+import './images/TerenFotbal.png';
 
 function Register() {
     const [username, setUsername] = useState('');
@@ -28,41 +30,41 @@ function Register() {
     };
 
     return (
-        <div>
-            <h2>Register</h2>
+        <div className='container'>
+            <h2 className='register-title'>Register</h2>
             <form>
-                <label>
+                <label className='username-label username'>
                     Username:
                     <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
                 </label>
                 <br />
-                <label>
+                <label className='username-label first_name'>
                     First Name:
                     <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                 </label>
                 <br />
-                <label>
+                <label className='username-label last_name'>
                     Last Name:
                     <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
                 </label>
                 <br />
-                <label>
+                <label className='username-label address'>
                     Email Address:
                     <input type="text" value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} />
                 </label>
                 <br />
-                <label>
+                <label className='username-label password'>
                     Password:
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </label>
                 <br />
-                <button type="button" onClick={handleRegister}>
+                <button className='register-button' type="button" onClick={handleRegister}>
                     Register
                 </button>
             </form>
             <p>
                 Already have an account?{' '}
-                <Link to="/login" style={{ cursor: 'pointer', color: 'blue' }}>
+                <Link to="/login">
                     Login here
                 </Link>
             </p>
