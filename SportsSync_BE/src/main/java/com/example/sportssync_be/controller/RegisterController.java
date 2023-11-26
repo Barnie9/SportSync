@@ -4,10 +4,7 @@ import com.example.sportssync_be.dto.UserDTO;
 import com.example.sportssync_be.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -46,14 +43,10 @@ public class RegisterController {
         return ResponseEntity.ok().body("User created successfully");
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody Map<String, String> user) {
-        UserDTO userDTO = userService.getUserByEmailAddressAndPassword(user.get("emailAddress"), user.get("password"));
+    @PostMapping("/confirm-email")
+    public ResponseEntity<String> confirmEmail(@RequestBody String token) {
+        System.out.println(token);
 
-        if (userDTO == null) {
-            return ResponseEntity.badRequest().body("Invalid email address or password");
-        }
-
-        return ResponseEntity.ok().body(userDTO.getEmailAddress());
+        return ResponseEntity.ok().body("Email confirmed successfully");
     }
 }

@@ -10,13 +10,18 @@ function Register() {
     const [lastName, setLastName] = useState('');
     const [emailAddress, setEmailAddress] = useState('');
     const [password, setPassword] = useState('');
+    const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
     const navigate = useNavigate();
 
     const handleRegister = async () => {
         try {
-            if (username === '' || firstName === '' || lastName === '' || emailAddress === '' || password === '') {
+            if (username === '' || firstName === '' || lastName === '' || emailAddress === '' || password === '' || passwordConfirmation === '') {
                 alert('Please fill out all fields');
+                return;
+            }
+            if (password !== passwordConfirmation) {
+                alert('Passwords do not match');
                 return;
             }
 
@@ -30,7 +35,6 @@ function Register() {
     };
 
     return (
-
         <div className='parent-container'>
            
                 <div className='container'>
@@ -71,7 +75,7 @@ function Register() {
                             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
 
                             <label className='username-label password'>Confirm Password:</label>
-                            <input type="password"  />
+                            <input type="password" value={passwordConfirmation} onChange={(e) => setPasswordConfirmation(e.target.value)} />
 
                             <div className='gender'>
                                 <div className='gendertype male'>
