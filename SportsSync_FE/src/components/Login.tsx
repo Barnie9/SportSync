@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
+import './style/Login.css';
 
 function Login() {
     const [emailAddress, setEmailAddress] = useState('');
@@ -28,8 +29,13 @@ function Login() {
 
     return (
         <div>
-            <h2>Login</h2>
-            <form>
+            <div className='login-container-parent'>
+                <div className='login-conainer'>
+
+              
+            <h2 className='form-title'>Login</h2>
+            <form className='form-login'>
+                <div className='login-component'>
                 <label>
                     Email Address:
                     <input type="text" value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} />
@@ -40,16 +46,19 @@ function Login() {
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </label>
                 <br />
-                <button type="button" onClick={handleLogin}>
+                <button className='login-button' type="button" onClick={handleLogin}>
                     Login
                 </button>
+                </div>
             </form>
-            <p>
+            <p className='register-redirect'>
                 Don't have an account?{' '}
                 <Link to="/register" style={{ cursor: 'pointer', color: 'blue' }}>
                     Register here
                 </Link>
             </p>
+            </div>
+            </div>
         </div>
     );
 };
