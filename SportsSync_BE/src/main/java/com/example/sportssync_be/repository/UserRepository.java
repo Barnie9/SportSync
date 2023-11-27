@@ -1,16 +1,14 @@
 package com.example.sportssync_be.repository;
 
-import com.example.sportssync_be.entities.User;
+import com.example.sportssync_be.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
+@Repository
 public interface UserRepository extends JpaRepository<User,Integer> {
-
-
-    Optional<User> findByUsername(String username);
-    Optional<User> findByUsernameAndPassword(String username, String password);
-
-
-
+    User findById(Long id);
+    User findByEmailAddressAndPassword(String emailAddress, String password);
+    User findByUsername(String username);
+    User findByEmailAddress(String emailAddress);
+    User findByToken(String token);
 }
