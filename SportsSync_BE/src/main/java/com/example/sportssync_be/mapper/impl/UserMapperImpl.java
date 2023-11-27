@@ -22,6 +22,9 @@ public class UserMapperImpl implements UserMapper {
         userDTO.setPassword( user.getPassword() );
         userDTO.setProfilePicture( user.getProfilePicture() );
         userDTO.setGender( user.getGender() );
+        userDTO.setToken( user.getToken() );
+        userDTO.setConfirmed( user.isConfirmed() );
+        userDTO.setCreatedAt( user.getCreatedAt() );
 
         return userDTO;
     }
@@ -41,6 +44,9 @@ public class UserMapperImpl implements UserMapper {
         user.setPassword( userDTO.getPassword() );
         user.setProfilePicture( userDTO.getProfilePicture() );
         user.setGender( userDTO.getGender() );
+        user.setToken( userDTO.getToken() );
+        user.setConfirmed( userDTO.isConfirmed() );
+        user.setCreatedAt( userDTO.getCreatedAt() );
 
         return user;
     }

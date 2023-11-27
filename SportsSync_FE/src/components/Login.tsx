@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
 import './style/Login.css';
 
 function Login() {
+    const navigate = useNavigate();
+
     const [emailAddress, setEmailAddress] = useState('');
     const [password, setPassword] = useState('');
 
-    const navigate = useNavigate();
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleLogin = async () => {
         try {
@@ -21,9 +23,8 @@ function Login() {
             localStorage.setItem('emailAddress', response.data);
 
             navigate('/')
-        }
-        catch (error: any) {
-            alert(error.response.data)
+        } catch (error: any) {
+            setErrorMessage(error.response.data);
         }
     };
 
@@ -46,6 +47,11 @@ function Login() {
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </label>
                 <br />
+
+                <p style={{ color: 'red' }}>
+                    {errorMessage}
+                </p>
+
                 <button className='login-button' type="button" onClick={handleLogin}>
                     Login
                 </button>

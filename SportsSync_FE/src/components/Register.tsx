@@ -5,32 +5,29 @@ import './style/Register.css';
 import './images/TerenFotbal.png';
 
 function Register() {
+    const navigate = useNavigate();
+
     const [username, setUsername] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [emailAddress, setEmailAddress] = useState('');
     const [password, setPassword] = useState('');
-    const [passwordConfirmation, setPasswordConfirmation] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
-    const navigate = useNavigate();
+    const [errorMessages, setErrorMessages] = useState(['']);
 
     const handleRegister = async () => {
         try {
-            if (username === '' || firstName === '' || lastName === '' || emailAddress === '' || password === '' || passwordConfirmation === '') {
+            if (username === '' || firstName === '' || lastName === '' || emailAddress === '' || password === '' || confirmPassword === '') {
                 alert('Please fill out all fields');
                 return;
             }
-            if (password !== passwordConfirmation) {
-                alert('Passwords do not match');
-                return;
-            }
 
-            await axios.post('http://localhost:8090/register', { username: username, firstName: firstName, lastName: lastName, emailAddress: emailAddress, password: password })
+            await axios.post('http://localhost:8090/register', { username: username, firstName: firstName, lastName: lastName, emailAddress: emailAddress, password: password, confirmPassword: confirmPassword })
 
             navigate('/login')
-        }
-        catch (error: any) {
-            alert(error.response.data);
+        } catch (error: any) {
+            setErrorMessages(error.response.data.split('|'));
         }
     };
 
@@ -39,7 +36,7 @@ function Register() {
            
                 <div className='container'>
                     <div className='left-side'>
-                        <img src={require('./images/fotbal.png')}></img>
+                        <img src={require('./images/fotbal.png')} alt=''></img>
 
                     </div>
                 <div className='right-side'> 
@@ -75,7 +72,7 @@ function Register() {
                             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
 
                             <label className='username-label password'>Confirm Password:</label>
-                            <input type="password" value={passwordConfirmation} onChange={(e) => setPasswordConfirmation(e.target.value)} />
+                            <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
 
                             <div className='gender'>
                                 <div className='gendertype male'>
@@ -88,11 +85,22 @@ function Register() {
                                 </div>
                             </div>
 
+                            {
+                                errorMessages.map(
+                                    (message, index) =>
+                                    <p key={index} style={{ color: 'red', margin: '0px' }}>
+                                        <b>
+                                            {message}
+                                        </b>
+                                    </p>
+                                )
+                            }
+
                             <button className='register-button' type="button" onClick={handleRegister}>
                                 Register
                             </button>
                             <p className='sign-in-message'>
-                                    Already have an account?{' '}
+                                Already have an account?{' '}
                                 <Link to="/login">
                                     Login here
                                 </Link>

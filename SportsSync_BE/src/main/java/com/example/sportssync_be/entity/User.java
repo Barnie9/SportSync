@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -34,6 +35,17 @@ public class User{
 
     @Column
     private String gender;
+
+    @Column
+    private String token;
+
+    @Column
+    private boolean isConfirmed;
+
+    @Column
+    private Date createdAt;
+
+
 
     @OneToMany(mappedBy = "organizer")
     private List<Event> eventList;

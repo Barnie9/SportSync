@@ -11,10 +11,10 @@ function Home() {
 
     return (
         <div>
-        <h1>{localStorage.getItem('emailAddress')}</h1>
-        <button onClick={logout}>
-            Logout
-        </button>
+            <h1>{localStorage.getItem('emailAddress')}</h1>
+            <button onClick={logout}>
+                Logout
+            </button>
         </div>
     );
 }
