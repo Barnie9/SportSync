@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
 import './style/Register.css';
 import './images/TerenFotbal.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 function Register() {
     const [username, setUsername] = useState('');
@@ -47,42 +49,39 @@ function Register() {
                         <div className='row n2'>
                             <div className='column'>
                                 <div className='name-input 1'>
-                                <label className='first-name-column'>First Name:</label>      
-                                <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                                <input type="text" placeholder='First Name' value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                                 </div>
                             </div>
                             <div className='column column2'>
                                 <div className='name-input input2'>
-                                <label className='last-name-column'>Last Name:</label>      
-                                <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                                <input type="text" placeholder='Last Name' value={lastName} onChange={(e) => setLastName(e.target.value)} />
                                 </div>
                             </div>
                         </div>
 
                        
                         <div className='last-of-content-form'>
-                            <label className='username-label username'>Username:</label>
-                            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-                       
-                            <label className='username-label address'> Email Address:  </label>
-                            <input type="text" value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} />
+                            <input  type="text" placeholder='Username' value={username} onChange={(e) => setUsername(e.target.value)} />
+                            <div>
+                            <FontAwesomeIcon icon={solid("lock")} />
+                            </div>
+                            <i className="fa-solid fa-lock"></i>
+                            <input    type="text" placeholder='Email Address' value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} />
                      
-                            <label className='username-label password'>Password:</label>
-                            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                            <input type="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
 
-                            <label className='username-label password'>Confirm Password:</label>
-                            <input type="password"  />
+                            <input type="password" placeholder='Confirm Password'  />
 
                             <div className='gender'>
-                                <div className='gendertype male'>
-                                    <input type="radio" value="none" id="male" name="gender" checked/>
-                                    <label className="radio">Male</label>
-                                </div>
-                                <div className='gendertype female'>
-                                <input type="radio" value="none" id="female" name="gender" />
-                                <label  className="radio">Female</label>
-                                </div>
+                                <select id="gender" name="gender">
+                                    <option value="" disabled selected hidden>Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
                             </div>
+
+                            
 
                             <button className='register-button' type="button" onClick={handleRegister}>
                                 Register
