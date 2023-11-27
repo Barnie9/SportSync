@@ -36,24 +36,17 @@ function Login() {
             <h2 className='form-title'>Login</h2>
             <form className='form-login'>
                 <div className='login-component'>
-                <label>
-                    Email Address:
-                    <input type="text" value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} />
-                </label>
-                <br />
-                <label>
-                    Password:
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                </label>
-                <br />
+                    <input placeholder='Username'    type="text" value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} />
+            
+                    <input  placeholder='Password'   type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 <button className='login-button' type="button" onClick={handleLogin}>
-                    Login
+                    Login 
                 </button>
                 </div>
             </form>
             <p className='register-redirect'>
                 Don't have an account?{' '}
-                <Link to="/register" style={{ cursor: 'pointer', color: 'blue' }}>
+                <Link to="/register" >
                     Register here
                 </Link>
             </p>

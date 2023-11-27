@@ -62,9 +62,9 @@ function Register() {
                        
                         <div className='last-of-content-form'>
                             <input  type="text" placeholder='Username' value={username} onChange={(e) => setUsername(e.target.value)} />
-                            <div>
-                            <FontAwesomeIcon icon={solid("lock")} />
-                            </div>
+                            {/* <div>
+                            <FontAwesomeIcon icon={faEnvelope} />
+                            </div> */}
                             <i className="fa-solid fa-lock"></i>
                             <input    type="text" placeholder='Email Address' value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} />
                      

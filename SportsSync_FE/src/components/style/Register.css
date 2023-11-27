@@ -13,11 +13,12 @@ body{
     background-color: #141f34;
     margin:auto;
     width: 70%;
-    height: 60%;
+    height: auto;
     border-radius: 10px;
 }
 .left-side{
     flex:1;
+    display: flex;
 }
 .right-side{
     flex:1;
@@ -29,8 +30,8 @@ body{
 }
 
 .container img {
-    display: block;
-    width: 100%;
+    /* display: block; */
+    width: 80%;
     height: 50%;
     margin: auto;
     border-radius: 10px;
@@ -76,6 +77,7 @@ body{
     cursor: pointer;
     align-self: center;
     margin:5px;
+    margin-top: 10px;
     border-radius: 4px;
     font-weight: 500;
 }
