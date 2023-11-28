@@ -53,8 +53,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(Long id, UserDTO userDTO) {
+    public UserDTO getUserByToken(String token) {
+        User user = userRepository.findByToken(token);
+        return userMapper.entityToDto(user);
+    }
 
+    @Override
+    public void updateUser(Long id, UserDTO userDTO) {
+        User existingUser = userRepository.findById(id);
+
+        if (existingUser != null) {
+            existingUser.setUsername(userDTO.getUsername());
+            existingUser.setFirstName(userDTO.getFirstName());
+            existingUser.setLastName(userDTO.getLastName());
+            existingUser.setEmailAddress(userDTO.getEmailAddress());
+            existingUser.setPassword(userDTO.getPassword());
+            existingUser.setToken(userDTO.getToken());
+            existingUser.setConfirmed(userDTO.isConfirmed());
+            existingUser.setCreatedAt(userDTO.getCreatedAt());
+
+            userRepository.save(existingUser);
+        }
     }
 
     @Override

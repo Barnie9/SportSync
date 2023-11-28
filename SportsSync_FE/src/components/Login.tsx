@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
 import './style/Login.css';
 
 function Login() {
+    const navigate = useNavigate();
+
     const [emailAddress, setEmailAddress] = useState('');
     const [password, setPassword] = useState('');
 
-    const navigate = useNavigate();
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleLogin = async () => {
         try {
@@ -21,9 +23,8 @@ function Login() {
             localStorage.setItem('emailAddress', response.data);
 
             navigate('/')
-        }
-        catch (error: any) {
-            alert(error.response.data)
+        } catch (error: any) {
+            setErrorMessage(error.response.data);
         }
     };
 
@@ -31,26 +32,30 @@ function Login() {
         <div>
             <div className='login-container-parent'>
                 <div className='login-conainer'>
-
-              
-            <h2 className='form-title'>Login</h2>
-            <form className='form-login'>
-                <div className='login-component'>
-                    <input placeholder='Username'    type="text" value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} />
-            
-                    <input  placeholder='Password'   type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <button className='login-button' type="button" onClick={handleLogin}>
-                    Login 
-                </button>
+                    <h2 className='form-title'>Login</h2>
+                    <form className='form-login'>
+                        <div className='login-component'>
+                            <label>Email Address:</label>
+                            <input type="text" value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} />
+                            <br />
+                            <label>Password:</label>
+                            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                            <br />
+                            <p style={{ color: 'red' }}>
+                                {errorMessage}
+                            </p>
+                            <button className='login-button' type="button" onClick={handleLogin}>
+                                Login
+                            </button>
+                        </div>
+                    </form>
+                    <p className='register-redirect'>
+                        Don't have an account?{' '}
+                        <Link to="/register" style={{ cursor: 'pointer', color: 'blue' }}>
+                            Register here
+                        </Link>
+                    </p>
                 </div>
-            </form>
-            <p className='register-redirect'>
-                Don't have an account?{' '}
-                <Link to="/register" >
-                    Register here
-                </Link>
-            </p>
-            </div>
             </div>
         </div>
     );

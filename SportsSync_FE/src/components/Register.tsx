@@ -1,103 +1,245 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import './style/Register.css';
-import './images/TerenFotbal.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+
+// Material UI
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+
+// CSS
+import "./style/Register.css";
 
 function Register() {
-    const [username, setUsername] = useState('');
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [emailAddress, setEmailAddress] = useState('');
-    const [password, setPassword] = useState('');
+	const navigate = useNavigate();
 
-    const navigate = useNavigate();
+	const [username, setUsername] = useState("");
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
+	const [emailAddress, setEmailAddress] = useState("");
+	const [password, setPassword] = useState("");
+	const [confirmPassword, setConfirmPassword] = useState("");
+	const [gender, setGender] = useState("");
 
-    const handleRegister = async () => {
-        try {
-            if (username === '' || firstName === '' || lastName === '' || emailAddress === '' || password === '') {
-                alert('Please fill out all fields');
-                return;
-            }
+	const [usernameError, setUsernameError] = useState("");
+	const [emailAddressError, setEmailAddressError] = useState("");
+	const [passwordError, setPasswordError] = useState("");
+	const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
-            await axios.post('http://localhost:8090/register', { username: username, firstName: firstName, lastName: lastName, emailAddress: emailAddress, password: password })
+	const [errorMessages, setErrorMessages] = useState(["ok", "ok", "ok"]);
 
-            navigate('/login')
-        }
-        catch (error: any) {
-            alert(error.response.data);
-        }
-    };
+	const setErrors = async () => {
+		if (errorMessages[0] === "present") {
+			setUsernameError("* Username already exists");
+		} else if (errorMessages[0] === "ok") {
+			setUsernameError("");
+		}
 
-    return (
+		if (errorMessages[1] === "invalid") {
+			setEmailAddressError("* Invalid email address");
+		} else if (errorMessages[1] === "present") {
+			setEmailAddressError("* Email address already exists");
+		} else if (errorMessages[1] === "ok") {
+			setEmailAddressError("");
+		}
 
-        <div className='parent-container'>
-           
-                <div className='container'>
-                    <div className='left-side'>
-                        <img src={require('./images/fotbal.png')}></img>
+		if (errorMessages[2] === "invalid") {
+			setPasswordError(
+				"* Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter and one number"
+			);
+			setConfirmPasswordError("");
+		} else if (errorMessages[2] === "notMatching") {
+			setPasswordError("* Passwords do not match");
+			setConfirmPasswordError("* Passwords do not match");
+		} else if (errorMessages[2] === "ok") {
+			setPasswordError("");
+			setConfirmPasswordError("");
+		}
+	};
 
-                    </div>
-                <div className='right-side'> 
-                <h2 className='register-title'>Register</h2>
-                <form className='register-form'>
+	const handleRegister = async () => {
+		try {
+			if (
+				username === "" ||
+				firstName === "" ||
+				lastName === "" ||
+				emailAddress === "" ||
+				password === "" ||
+				confirmPassword === "" ||
+				gender === ""
+			) {
+				alert("Please fill out all fields");
+				return;
+			}
 
-              
+			await axios.post("http://localhost:8090/register", {
+				username: username,
+				firstName: firstName,
+				lastName: lastName,
+				emailAddress: emailAddress,
+				password: password,
+				confirmPassword: confirmPassword,
+				gender: gender,
+			});
 
-                        <div className='row n2'>
-                            <div className='column'>
-                                <div className='name-input 1'>
-                                <input type="text" placeholder='First Name' value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                                </div>
-                            </div>
-                            <div className='column column2'>
-                                <div className='name-input input2'>
-                                <input type="text" placeholder='Last Name' value={lastName} onChange={(e) => setLastName(e.target.value)} />
-                                </div>
-                            </div>
-                        </div>
+			navigate("/login");
+		} catch (error: any) {
+			setErrorMessages(error.response.data.split("|"));
+		}
+	};
 
-                       
-                        <div className='last-of-content-form'>
-                            <input  type="text" placeholder='Username' value={username} onChange={(e) => setUsername(e.target.value)} />
-                            {/* <div>
-                            <FontAwesomeIcon icon={faEnvelope} />
-                            </div> */}
-                            <i className="fa-solid fa-lock"></i>
-                            <input    type="text" placeholder='Email Address' value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} />
-                     
-                            <input type="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
+	useEffect(() => {
+		const waitForSetErrors = async () => {
+			await setErrors();
+		};
 
-                            <input type="password" placeholder='Confirm Password'  />
+		waitForSetErrors();
+	}, [errorMessages]);
 
-                            <div className='gender'>
-                                <select id="gender" name="gender">
-                                    <option value="" disabled selected hidden>Gender</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
+	return (
+		<Box className="background">
+			<Grid container xs={10} md={8} className="container">
+				<Grid container xs={12} md={6} className="left-column">
+					<img
+						src={require("./images/fotbal.png")}
+						alt="fotbal"
+						className="image"
+					/>
+				</Grid>
+				<Grid container xs={12} md={6} className="right-column">
+					<Grid item xs={12} md={12} className="item">
+						<h1 className="title">Register</h1>
+					</Grid>
 
-                            
+					<Grid item xs={12} md={12} className="item">
+						<input
+							id="username-input"
+							type="text"
+							placeholder="Username"
+							className={
+								usernameError === "" ? "input" : "input error"
+							}
+							value={username}
+							onChange={(event) =>
+								setUsername(event.target.value)
+							}
+						></input>
+					</Grid>
+					<Grid item xs={12} md={12} className="item">
+						<input
+							type="text"
+							placeholder="First Name"
+							className="input"
+							value={firstName}
+							onChange={(event) =>
+								setFirstName(event.target.value)
+							}
+						></input>
+					</Grid>
+					<Grid item xs={12} md={12} className="item">
+						<input
+							type="text"
+							placeholder="Last Name"
+							className="input"
+							value={lastName}
+							onChange={(event) =>
+								setLastName(event.target.value)
+							}
+						></input>
+					</Grid>
+					<Grid item xs={12} md={12} className="item">
+						<input
+							type="text"
+							placeholder="Email"
+							className={
+								emailAddressError === ""
+									? "input"
+									: "input error"
+							}
+							value={emailAddress}
+							onChange={(event) =>
+								setEmailAddress(event.target.value)
+							}
+						></input>
+					</Grid>
+					<Grid item xs={12} md={12} className="item">
+						<input
+							type="password"
+							placeholder="Password"
+							className={
+								passwordError === "" ? "input" : "input error"
+							}
+							value={password}
+							onChange={(event) =>
+								setPassword(event.target.value)
+							}
+						></input>
+					</Grid>
+					<Grid item xs={12} md={12} className="item">
+						<input
+							type="password"
+							placeholder="Confirm Password"
+							className={
+								confirmPasswordError === ""
+									? "input"
+									: "input error"
+							}
+							value={confirmPassword}
+							onChange={(event) =>
+								setConfirmPassword(event.target.value)
+							}
+						></input>
+					</Grid>
 
-                            <button className='register-button' type="button" onClick={handleRegister}>
-                                Register
-                            </button>
-                            <p className='sign-in-message'>
-                                    Already have an account?{' '}
-                                <Link to="/login">
-                                    Login here
-                                </Link>
-                            </p>
-                        </div>
-                </form>
-                </div>
-            </div>
-        </div>
-    );
-};
+					<Grid item xs={12} md={12} className="item">
+						<select
+							className="select"
+							value={gender}
+							onChange={(event) => setGender(event.target.value)}
+						>
+							<option value="" disabled hidden>
+								{" "}
+								Select gender{" "}
+							</option>
+							<option className="option" value="male">
+								Male
+							</option>
+							<option className="option" value="female">
+								Female
+							</option>
+							<option className="option" value="other">
+								Other
+							</option>
+						</select>
+					</Grid>
+
+					<Grid item xs={12} md={12} className="item">
+						<p className="text-error">{usernameError}</p>
+					</Grid>
+					<Grid item xs={12} md={12} className="item">
+						<p className="text-error">{emailAddressError}</p>
+					</Grid>
+					<Grid item xs={12} md={12} className="item">
+						<p className="text-error">{passwordError}</p>
+					</Grid>
+
+					<Grid item xs={12} md={12} className="item">
+						<button className="button" onClick={handleRegister}>
+							Register
+						</button>
+					</Grid>
+
+					<Grid item xs={12} md={12} className="item">
+						<p className="text">
+							Already have an account?{" "}
+							<Link to="/login" className="link">
+								Login here
+							</Link>
+						</p>
+					</Grid>
+				</Grid>
+			</Grid>
+		</Box>
+	);
+}
 
 export default Register;
