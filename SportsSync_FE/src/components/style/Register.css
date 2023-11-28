@@ -1,142 +1,259 @@
-body{
-    height: 100vh;
-}    
 
-.parent-container{
+/* display */
+/* background */
+/* dimension */
+/* border */
+/* spacing */
+/* text */
+
+.background {
+    flex-grow: 1;
+
+    /* display */
     display: flex;
-    background-color: green;
-    height: 100vh;
+    justify-content: center;
+    align-items: center;
+
+    /* background */
+    background: linear-gradient(135deg, #2d5b70, 15%, #0e1729);
+
+    /* dimension */
+    width: 100%;
+    min-height: 100vh;
+
+    /* border */
+    /* spacing */
+    /* text */
 }
 
-.container{
+.container {
+    /* display */
+    /* background */
+    background-color: #141f34;
+
+    /* dimension */
+    height: auto;
+
+    /* border */
+    border-radius: 18px;
+
+    /* spacing */
+    margin: 20px 0px;
+
+    /* text */
+}
+
+.left-column {
+    /* display */
     display: flex;
-    background-color: white;
-    margin:auto;
-    width: 50%;
-    border-radius: 10px;
-}
-.left-side{
-    flex:1;
-}
-.right-side{
-    flex:1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    /* background */
+    /* dimension */
+    /* border */
+    /* spacing */
+    padding: 20px;
+    
+    /* text */
 }
 
-.register-title{
+.right-column {
+    /* display */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    /* background */
+    /* dimension */
+    /* border */
+    /* spacing */
+    padding: 0px;
+
+    /* text */
+}
+
+.image {
+    /* display */
+    /* background */
+    /* dimension */
+    width: 200px;
+    height: 200px;
+
+    /* border */
+    /* spacing */
+    /* text */
+}
+
+.item {
+    /* display */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    /* background */
+    /* dimension */
+    /* border */
+    /* spacing */
+    padding: 4px 0px;
+
+    /* text */
+}
+
+.title {
+    /* display */
+    /* background */
+    /* dimension */
+    width: 100%;
+
+    /* border */
+    /* spacing */
+    margin: 0px 0px 20px 0px;
+
+    /* text */
+    color: #FFFFFF;
     text-align: center;
 }
 
-.container img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    margin: auto;
-    border-radius: 10px;
-    border-right: 1px solid green;
-}
-.row {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 100%;
-  }
- 
-.column {
-    display: flex;
-    flex-direction: column;
-    flex-basis: 80%;
-    flex: 1;
+.input {
+    /* display */
+    /* background */
+    background-color: #202a3e;
 
-  }
+    /* dimension */
+    width: 60%;
+    height: 35px;
 
-.last-of-content-form{
-    display: flex;
-    flex-direction: column;
+    /* border */
+    border-style: solid;
+    border-radius: 8px;
+    border-color: #202a3e;
+
+    /* spacing */
+    padding: 0px 10px;
+    
+    /* text */
+    color: #FFFFFF;
+    font-size: 16px;
 }
 
-.name-input  {
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-}
-.input2{
-    align-items: flex-end;
+.input.error {
+    /* display */
+    /* background */
+    /* dimension */
+    /* border */
+    border-color: red;
+
+    /* spacing */
+    /* text */
 }
 
-.name-input input{
-    border-radius: 5px;
-    height: 2.5em;
-    width: 100%;
-    border: 1px solid gray;
-    margin-bottom:5px;
-}
-.last-of-content-form input {
-    border-radius: 5px;
-    height: 2.5em;
-    width: 100%;
-    border: 1px solid gray;
-    margin-bottom:5px;
+.select {
+    /* display */
+    /* background */
+    background-color: #202a3e;
+
+    /* dimension */
+    width: 60%;
+    height: 40px;
+
+    /* border */
+    border-style: solid;
+    border-radius: 8px;
+    border-color: #202a3e;
+
+    /* spacing */
+    padding: 0px 10px;
+    
+    /* text */
+    color: #FFFFFF;
+    font-size: 16px;
 }
 
-.register-button{
-    color: #dadee5;
-    text-shadow: -1px -1px 0 #000;
-    border-color: #000;
-    box-shadow: inset 0 1px 0 0 hsla(0,0%,100%,.25), 0 1px 2px 0 rgba(0,0,0,.44);
-    background: linear-gradient(0deg,#2e2e2e 0,#030303);
-    max-width: 50%;
-    min-width: 50%;
-    height: 3em;
+.text-error {
+    /* display */
+    /* background */
+    /* dimension */
+    /* border */
+    /* spacing */
+    margin: 0px;
+
+    /* text */
+    color: red;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.button {
+    /* display */
+    /* background */
+    background-color: #5fc4ee;
+
+    /* dimension */
+    width: 140px;
+    height: 40px;
+
+    /* border */
+    border-style: solid;
+    border-radius: 8px;
+    border-color: #5fc4ee;
+
+    /* spacing */
+    margin: 20px 0px;
+
+    /* text */
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: bold;
+
+    /* cursor */
     cursor: pointer;
-    align-self: center;
-    margin:5px;
-    border-radius: 4px;
-    font-weight: 500;
 }
 
-.register-button:hover{
-    background: linear-gradient(0deg, #030303 0, #2e2e2e);
-    color: #fff;
+.button:hover {
+    /* display */
+    /* background */
+    background-color: #202a3e;
+
+    /* dimension */
+    /* border */
+    /* spacing */
+    /* text */
+    color: #5fc4ee;
 }
 
-.sign-in-message{
-    align-self: center;
+.text {
+    /* display */
+    /* background */
+    /* dimension */
+    /* border */
+    /* spacing */
+    /* text */
+    color: #5fc4ee;
+    font-weight: bold;
 }
 
-.sign-in-message a{
-    text-decoration: none;
-}
-.sign-in-message a:hover{
-    color: green;
-}
-
-.register-form{
-    width: 50%;
-    margin: auto;
-}
-
-.input2{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
-.last-name-column{
-    text-align: left;
-    width: 100%;
-}
-.column2{
-    align-items: flex-end;
+.link {
+    /* display */
+    /* background */
+    /* dimension */
+    /* border */
+    /* spacing */
+    /* text */
+    color: #5fc4ee;
+    font-weight: bold;
 }
 
-.gender{
-    display: flex;
-    border-top: 1px solid green;
-    border-bottom: 1px solid green;
-}
-.gendertype{
-    display: flex;
-    align-items: center;
-}
-.gendertype input{
-    cursor: pointer;
+.link:hover {
+    /* display */
+    /* background */
+    /* dimension */
+    /* border */
+    /* spacing */
+    /* text */
+    color: #FFFFFF;
 }

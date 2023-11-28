@@ -21,32 +21,44 @@ public class RegisterController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody Map<String, String> user) {
+    public ResponseEntity<String> registerUser(@RequestBody Map<String, String> body) {
         String errorMessages = "";
+        boolean hasErrors = false;
 
-        UserDTO foundUserByUsername = userService.getUserByUsername(user.get("username"));
+        UserDTO foundUserByUsername = userService.getUserByUsername(body.get("username"));
         if (foundUserByUsername != null) {
-            errorMessages += "* Username already exists|";
+            errorMessages += "present|";
+            hasErrors = true;
+        } else {
+            errorMessages += "ok|";
         }
 
         String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z]{2,}$";
-        if (!user.get("emailAddress").matches(emailRegex)) {
-            errorMessages += "* Invalid email address|";
+        if (!body.get("emailAddress").matches(emailRegex)) {
+            errorMessages += "invalid|";
+            hasErrors = true;
         } else {
-            UserDTO foundUserByEmailAddress = userService.getUserByEmailAddress(user.get("emailAddress"));
+            UserDTO foundUserByEmailAddress = userService.getUserByEmailAddress(body.get("emailAddress"));
             if (foundUserByEmailAddress != null) {
-                errorMessages += "* Email address already exists|";
+                errorMessages += "present|";
+                hasErrors = true;
+            } else {
+                errorMessages += "ok|";
             }
         }
 
         String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d]{8,}$";
-        if (!user.get("password").matches(passwordRegex)) {
-            errorMessages += "* Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number|";
-        } else if (!user.get("password").equals(user.get("confirmPassword"))) {
-            errorMessages += "* Passwords do not match|";
+        if (!body.get("password").matches(passwordRegex)) {
+            errorMessages += "invalid";
+            hasErrors = true;
+        } else if (!body.get("password").equals(body.get("confirmPassword"))) {
+            errorMessages += "notMatching";
+            hasErrors = true;
+        } else {
+            errorMessages += "ok";
         }
 
-        if (!errorMessages.isEmpty()) {
+        if (hasErrors) {
             return ResponseEntity.badRequest().body(errorMessages);
         }
 
@@ -58,11 +70,12 @@ public class RegisterController {
 
         UserDTO userDTO = new UserDTO();
 
-        userDTO.setUsername(user.get("username"));
-        userDTO.setFirstName(user.get("firstName"));
-        userDTO.setLastName(user.get("lastName"));
-        userDTO.setEmailAddress(user.get("emailAddress"));
-        userDTO.setPassword(user.get("password"));
+        userDTO.setUsername(body.get("username"));
+        userDTO.setFirstName(body.get("firstName"));
+        userDTO.setLastName(body.get("lastName"));
+        userDTO.setEmailAddress(body.get("emailAddress"));
+        userDTO.setPassword(body.get("password"));
+        userDTO.setGender(body.get("gender"));
         userDTO.setToken(token);
         userDTO.setConfirmed(isConfirmed);
         userDTO.setCreatedAt(createdAt);
@@ -73,10 +86,8 @@ public class RegisterController {
     }
 
     @PostMapping("/confirm-email")
-    public ResponseEntity<String> confirmEmail(@RequestBody Map<String, String> user) {
-//        System.out.println(user.get("token"));
-
-        UserDTO userDTO = userService.getUserByToken(user.get("token"));
+    public ResponseEntity<String> confirmEmail(@RequestBody Map<String, String> body) {
+        UserDTO userDTO = userService.getUserByToken(body.get("token"));
 
         if (userDTO == null) {
             return ResponseEntity.badRequest().body("Invalid token");
@@ -99,8 +110,8 @@ public class RegisterController {
     }
 
     @PostMapping("/generate-new-email-confirmation-token")
-    public ResponseEntity<String> generateNewEmailConfirmationToken(@RequestBody Map<String, String> user) {
-        UserDTO userDTO = userService.getUserByToken(user.get("token"));
+    public ResponseEntity<String> generateNewEmailConfirmationToken(@RequestBody Map<String, String> body) {
+        UserDTO userDTO = userService.getUserByToken(body.get("token"));
 
         String token = RandomStringUtils.random(16, true, true);
         Date createdAt = new Date();

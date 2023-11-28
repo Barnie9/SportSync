@@ -21,18 +21,18 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody Map<String, String> user) {
+    public ResponseEntity<String> loginUser(@RequestBody Map<String, String> body) {
         String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z]{2,}$";
-        if (!user.get("emailAddress").matches(emailRegex)) {
+        if (!body.get("emailAddress").matches(emailRegex)) {
             return ResponseEntity.badRequest().body("* Invalid email address");
         } else {
-            UserDTO foundUserByEmailAddress = userService.getUserByEmailAddress(user.get("emailAddress"));
+            UserDTO foundUserByEmailAddress = userService.getUserByEmailAddress(body.get("emailAddress"));
             if (foundUserByEmailAddress == null) {
                 return ResponseEntity.badRequest().body("* An account with this email address does not exist");
             }
         }
 
-        UserDTO userDTO = userService.getUserByEmailAddressAndPassword(user.get("emailAddress"), user.get("password"));
+        UserDTO userDTO = userService.getUserByEmailAddressAndPassword(body.get("emailAddress"), body.get("password"));
 
         if (userDTO == null) {
             return ResponseEntity.badRequest().body("* Wrong password");
