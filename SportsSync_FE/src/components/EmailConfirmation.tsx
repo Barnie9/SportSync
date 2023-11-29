@@ -17,53 +17,64 @@ function EmailComfirmation() {
 	const [message, setMessage] = useState("Waiting for confirmation...");
 
 	useEffect(() => {
-	    const confirmEmail = async () => {
-	        try {
-	            await axios.post('http://localhost:8090/confirm-email', { token: params.token });
+		const confirmEmail = async () => {
+			try {
+				await axios.post("http://localhost:8090/confirm-email", {
+					token: params.token,
+				});
 
-	            setMessage('Your email has been confirmed. You will be redirected to the login page shortly.');
+				setMessage(
+					"Your email has been confirmed. You will be redirected to the login page shortly."
+				);
 
-	            setTimeout(() => {
-	                navigate('/login');
-	            }, 5000);
-	        } catch (error: any) {
-	            if (error.response.data === 'Invalid token') {
-	                setMessage('Email confirmation token is invalid.');
+				setTimeout(() => {
+					navigate("/login");
+				}, 5000);
+			} catch (error: any) {
+				if (error.response.data === "Invalid token") {
+					setMessage("Email confirmation token is invalid.");
 
-	                setTimeout(() => {
-	                    navigate('/register');
-	                }, 5000);
-	            } else if (error.response.data === 'Email already confirmed') {
-	                setMessage('Email already confirmed. You will be redirected to the login page shortly.');
+					setTimeout(() => {
+						navigate("/register");
+					}, 5000);
+				} else if (error.response.data === "Email already confirmed") {
+					setMessage(
+						"Email already confirmed. You will be redirected to the login page shortly."
+					);
 
-	                setTimeout(() => {
-	                    navigate('/login');
-	                }, 5000);
-	            } else if (error.response.data === 'Expired token') {
-	                setMessage('Email confirmation token has expired.');
-	            }
-	        }
-	    };
+					setTimeout(() => {
+						navigate("/login");
+					}, 5000);
+				} else if (error.response.data === "Expired token") {
+					setMessage("Email confirmation token has expired.");
+				}
+			}
+		};
 
-	    confirmEmail();
+		confirmEmail();
 	}, [navigate, params]);
 
 	const handleGenerateNewToken = async () => {
-	    try {
-	        await axios.post('http://localhost:8090/generate-new-email-confirmation-token', { token: params.token });
+		try {
+			await axios.post(
+				"http://localhost:8090/generate-new-email-confirmation-token",
+				{ token: params.token }
+			);
 
-	        setMessage('New email confirmation token generated. Please check your email again.');
+			setMessage(
+				"New email confirmation token generated. Please check your email again."
+			);
 
-	        setTimeout(() => {
-	            navigate('/login');
-	        }, 5000);
-	    } catch (error: any) {
-	        alert(error.response.data);
-	    }
+			setTimeout(() => {
+				navigate("/login");
+			}, 5000);
+		} catch (error: any) {
+			alert(error.response.data);
+		}
 	};
 
 	const handleRegister = () => {
-	    navigate('/register');
+		navigate("/register");
 	};
 
 	return (
@@ -86,7 +97,10 @@ function EmailComfirmation() {
 							md={6}
 							className={EmailConfirmationCSS.item}
 						>
-							<button className={EmailConfirmationCSS.button} onClick={handleGenerateNewToken}>
+							<button
+								className={EmailConfirmationCSS.button}
+								onClick={handleGenerateNewToken}
+							>
 								Generate new token
 							</button>
 						</Grid>
@@ -96,23 +110,15 @@ function EmailComfirmation() {
 							md={6}
 							className={EmailConfirmationCSS.item}
 						>
-							<button className={EmailConfirmationCSS.button} onClick={handleRegister}>
+							<button
+								className={EmailConfirmationCSS.button}
+								onClick={handleRegister}
+							>
 								Register
 							</button>
 						</Grid>
 					</>
 				) : null}
-
-				{/* <Grid item xs={12} md={6} className={EmailConfirmationCSS.item}>
-					<button className={EmailConfirmationCSS.button}>
-						Generate
-					</button>
-				</Grid>
-				<Grid item xs={12} md={6} className={EmailConfirmationCSS.item}>
-					<button className={EmailConfirmationCSS.button}>
-						Register
-					</button>
-				</Grid> */}
 			</Grid>
 		</Box>
 	);

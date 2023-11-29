@@ -2,6 +2,7 @@ package com.example.sportssync_be.controller;
 
 import com.example.sportssync_be.dto.UserDTO;
 import com.example.sportssync_be.service.UserService;
+import com.example.sportssync_be.utils.SendEmail;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -81,6 +82,8 @@ public class RegisterController {
         userDTO.setCreatedAt(createdAt);
 
         userService.createUser(userDTO);
+
+        SendEmail.sendConfirmationEmail(body.get("emailAddress"), token);
 
         return ResponseEntity.ok().body("User created successfully");
     }
