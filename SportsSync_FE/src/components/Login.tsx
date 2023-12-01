@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
-import './style/Login.css';
+
+// Material UI
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+
+// CSS
+import LoginCSS from "./style/Login.module.css";
 
 function Login() {
     const navigate = useNavigate();
@@ -29,35 +35,63 @@ function Login() {
     };
 
     return (
-        <div>
-            <div className='login-container-parent'>
-                <div className='login-conainer'>
-                    <h2 className='form-title'>Login</h2>
-                    <form className='form-login'>
-                        <div className='login-component'>
-                            <label>Email Address:</label>
-                            <input type="text" value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} />
-                            <br />
-                            <label>Password:</label>
-                            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                            <br />
-                            <p style={{ color: 'red' }}>
-                                {errorMessage}
-                            </p>
-                            <button className='login-button' type="button" onClick={handleLogin}>
-                                Login
-                            </button>
-                        </div>
-                    </form>
-                    <p className='register-redirect'>
-                        Don't have an account?{' '}
-                        <Link to="/register" style={{ cursor: 'pointer', color: 'blue' }}>
-                            Register here
-                        </Link>
-                    </p>
-                </div>
-            </div>
-        </div>
+        <Box className={LoginCSS.background}>
+            <Grid container xs={10} md={8} className={LoginCSS.container}>
+                <Grid container xs={12} md={6} className={LoginCSS.left_column}>
+                    <img
+                        src={require("./images/fotbal.png")}
+                        alt="fotbal"
+                        className={LoginCSS.image}
+                    />
+                </Grid>
+
+                <Grid container xs={12} md={6} className={LoginCSS.right_column}>
+                    <Grid item xs={12} md={12} className={LoginCSS.item}>
+                        <h1 className={LoginCSS.title}> Login</h1>
+                    </Grid>
+
+                    <Grid item xs={12} md={12} className={LoginCSS.item}>
+                        <input
+                            type="text"
+                            placeholder="Email"
+                            className={LoginCSS.input}
+                            value={emailAddress}
+                            onChange={(event) =>
+                                setEmailAddress(event.target.value)
+                            }
+                        ></input>
+                    </Grid>
+
+                    <Grid item xs={12} md={12} className={LoginCSS.item}>
+                        <input
+                            type="password"
+                            placeholder='Password'
+                            className={LoginCSS.input}
+                            value={password}
+                            onChange={(event) =>
+                                setPassword(event.target.value)
+                            }
+                        ></input>
+                    </Grid>
+                    <Grid item xs={12} md={12} className={LoginCSS.item}>
+                        <p className={LoginCSS.text_error}> {errorMessage} </p>
+                    </Grid>
+                    <Grid item xs={12} md={12} className={LoginCSS.item}>
+                        <button className={LoginCSS.button} onClick={handleLogin}>
+                            Login
+                        </button>
+                    </Grid>
+                    <Grid item xs={12} md={12} className={LoginCSS.item}>
+                        <p className={LoginCSS.text}>
+                            You don't have an account?{" "}
+                            <Link to="/Register" className={LoginCSS.link}>
+                                Register here
+                            </Link>
+                        </p>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Box>
     );
 };
 
