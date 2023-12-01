@@ -9,6 +9,7 @@ import {
 import Register from "./components/Register";
 import Login from "./components/Login";
 import Home from "./components/Home";
+import Events from "./components/Events";
 import EmailConfirmation from "./components/EmailConfirmation";
 
 function App() {
@@ -17,6 +18,8 @@ function App() {
 			<Router>
 				<Routes>
 					<Route path="/" element={<Home />} />
+
+					<Route path="/events" element={<Events />} />
 
 					<Route path="/login" element={<Login />} />
 

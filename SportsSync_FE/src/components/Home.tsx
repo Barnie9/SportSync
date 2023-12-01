@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import "./style/Home.css";
+import NavBar from "./NavBar";
 
 function Home() {
 	const navigate = useNavigate();
@@ -12,12 +13,10 @@ function Home() {
 	};
 
 	return (
-		<div>
-		    <h1>{localStorage.getItem('emailAddress')}</h1>
-		    <button onClick={logout}>
-		        Logout
-		    </button>
-		</div>
+		<>
+			<NavBar selected="Home" />
+			<h1>Home</h1>
+		</>
 	);
 }
 

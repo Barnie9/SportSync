@@ -9,6 +9,10 @@ import Grid from "@mui/material/Grid";
 // CSS
 import RegisterCSS from "./style/Register.module.css";
 
+// Images
+import Logo from "./images/logo.png";
+import Footballer from "./images/footballer.png";
+
 function Register() {
 	const navigate = useNavigate();
 
@@ -98,25 +102,45 @@ function Register() {
 	return (
 		<Box className={RegisterCSS.background}>
 			<Grid container xs={10} md={8} className={RegisterCSS.container}>
-				<Grid container xs={12} md={6} className={RegisterCSS.left_column}>
-					<img
-						src={require("./images/fotbal.png")}
-						alt="fotbal"
-						className={RegisterCSS.image}
-					/>
-				</Grid>
-				<Grid container xs={12} md={6} className={RegisterCSS.right_column}>
+				<Grid
+					container
+					xs={12}
+					md={6}
+					className={RegisterCSS.left_column}
+				>
 					<Grid item xs={12} md={12} className={RegisterCSS.item}>
-						<h1 className={RegisterCSS.title}>Register</h1>
+						<button className={RegisterCSS.home_button} onClick={() => navigate("/home")}>
+								<img
+									src={Logo}
+									alt="Logo"
+									className={RegisterCSS.logo}
+								></img>
+								<p className={RegisterCSS.app_title}>SportSync</p>
+						</button>
+					</Grid>
+
+					<Grid item xs={12} md={12} className={RegisterCSS.item}>
+						<img src={Footballer} alt="footballer" className={RegisterCSS.image}></img>
+					</Grid>
+				</Grid>
+				<Grid
+					container
+					xs={12}
+					md={6}
+					className={RegisterCSS.right_column}
+				>
+					<Grid item xs={12} md={12} className={RegisterCSS.item}>
+						<p className={RegisterCSS.title}>Register</p>
 					</Grid>
 
 					<Grid item xs={12} md={12} className={RegisterCSS.item}>
 						<input
-							id="username-input"
 							type="text"
 							placeholder="Username"
 							className={
-								usernameError === "" ? RegisterCSS.input : RegisterCSS.input_error
+								usernameError === ""
+									? RegisterCSS.input
+									: RegisterCSS.input_error
 							}
 							value={username}
 							onChange={(event) =>
@@ -166,7 +190,9 @@ function Register() {
 							type="password"
 							placeholder="Password"
 							className={
-								passwordError === "" ? RegisterCSS.input : RegisterCSS.input_error
+								passwordError === ""
+									? RegisterCSS.input
+									: RegisterCSS.input_error
 							}
 							value={password}
 							onChange={(event) =>
@@ -200,30 +226,33 @@ function Register() {
 								{" "}
 								Select gender{" "}
 							</option>
-							<option className="option" value="male">
-								Male
-							</option>
-							<option className="option" value="female">
-								Female
-							</option>
-							<option className="option" value="other">
-								Other
-							</option>
+							<option value="male">Male</option>
+							<option value="female">Female</option>
+							<option value="other">Other</option>
 						</select>
 					</Grid>
 
 					<Grid item xs={12} md={12} className={RegisterCSS.item}>
-						<p className={RegisterCSS.text_error}>{usernameError}</p>
+						<p className={RegisterCSS.text_error}>
+							{usernameError}
+						</p>
 					</Grid>
 					<Grid item xs={12} md={12} className={RegisterCSS.item}>
-						<p className={RegisterCSS.text_error}>{emailAddressError}</p>
+						<p className={RegisterCSS.text_error}>
+							{emailAddressError}
+						</p>
 					</Grid>
 					<Grid item xs={12} md={12} className={RegisterCSS.item}>
-						<p className={RegisterCSS.text_error}>{passwordError}</p>
+						<p className={RegisterCSS.text_error}>
+							{passwordError}
+						</p>
 					</Grid>
 
 					<Grid item xs={12} md={12} className={RegisterCSS.item}>
-						<button className={RegisterCSS.button} onClick={handleRegister}>
+						<button
+							className={RegisterCSS.register_button}
+							onClick={handleRegister}
+						>
 							Register
 						</button>
 					</Grid>
