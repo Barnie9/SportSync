@@ -15,15 +15,18 @@ public class UserMapperImpl implements UserMapper {
         UserDTO userDTO = new UserDTO();
 
         userDTO.setId( user.getId() );
+
         userDTO.setUsername( user.getUsername() );
-        userDTO.setFirstName( user.getFirstName() );
-        userDTO.setLastName( user.getLastName() );
         userDTO.setEmailAddress( user.getEmailAddress() );
         userDTO.setPassword( user.getPassword() );
-        userDTO.setProfilePicture( user.getProfilePicture() );
+
+        userDTO.setFirstName( user.getFirstName() );
+        userDTO.setLastName( user.getLastName() );
         userDTO.setGender( user.getGender() );
+        userDTO.setProfilePicturePath( user.getProfilePicturePath() );
+
         userDTO.setToken( user.getToken() );
-        userDTO.setConfirmed( user.isConfirmed() );
+        userDTO.setIsConfirmed( user.getIsConfirmed() );
         userDTO.setCreatedAt( user.getCreatedAt() );
 
         return userDTO;
@@ -37,15 +40,18 @@ public class UserMapperImpl implements UserMapper {
         User user = new User();
 
         user.setId( userDTO.getId() );
+
         user.setUsername( userDTO.getUsername() );
-        user.setFirstName( userDTO.getFirstName() );
-        user.setLastName( userDTO.getLastName() );
         user.setEmailAddress( userDTO.getEmailAddress() );
         user.setPassword( userDTO.getPassword() );
-        user.setProfilePicture( userDTO.getProfilePicture() );
+
+        user.setFirstName( userDTO.getFirstName() );
+        user.setLastName( userDTO.getLastName() );
         user.setGender( userDTO.getGender() );
+        user.setProfilePicturePath( userDTO.getProfilePicturePath() );
+
         user.setToken( userDTO.getToken() );
-        user.setConfirmed( userDTO.isConfirmed() );
+        user.setIsConfirmed( userDTO.getIsConfirmed() );
         user.setCreatedAt( userDTO.getCreatedAt() );
 
         return user;

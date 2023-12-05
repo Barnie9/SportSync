@@ -38,7 +38,7 @@ public class LoginController {
             return ResponseEntity.badRequest().body("* Wrong password");
         }
 
-        if (!userDTO.isConfirmed()) {
+        if (!userDTO.getIsConfirmed()) {
             return ResponseEntity.badRequest().body("* Email address not confirmed");
         }
 
