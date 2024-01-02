@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class RatingMapperImpl implements RatingMapper {
     @Override
-    public RatingDTO entityToDto(Rating rating) {
+    public RatingDTO toDto(Rating rating) {
         if (rating == null) {
             return null;
         }
@@ -17,9 +17,9 @@ public class RatingMapperImpl implements RatingMapper {
 
         ratingDTO.setId(rating.getId());
 
-        ratingDTO.setIdEvent(rating.getEvent().getId());
-        ratingDTO.setIdRaterUser(rating.getRaterUser().getId());
-        ratingDTO.setIdRatedUser(rating.getRatedUser().getId());
+//        ratingDTO.setIdEvent(rating.getEvent().getId());
+//        ratingDTO.setIdRaterUser(rating.getRaterUser().getId());
+//        ratingDTO.setIdRatedUser(rating.getRatedUser().getId());
 
         ratingDTO.setPace(rating.getPace());
         ratingDTO.setShooting(rating.getShooting());
@@ -34,7 +34,7 @@ public class RatingMapperImpl implements RatingMapper {
     }
 
     @Override
-    public Rating dtoToEntity(RatingDTO ratingDTO) {
+    public Rating toEntity(RatingDTO ratingDTO) {
         if (ratingDTO == null) {
             return null;
         }
@@ -43,9 +43,9 @@ public class RatingMapperImpl implements RatingMapper {
 
         rating.setId(ratingDTO.getId());
 
-        rating.getEvent().setId(ratingDTO.getIdEvent());
-        rating.getRaterUser().setId(ratingDTO.getIdRaterUser());
-        rating.getRatedUser().setId(ratingDTO.getIdRatedUser());
+//        rating.getEvent().setId(ratingDTO.getIdEvent());
+//        rating.getRaterUser().setId(ratingDTO.getIdRaterUser());
+//        rating.getRatedUser().setId(ratingDTO.getIdRatedUser());
 
         rating.setPace(ratingDTO.getPace());
         rating.setShooting(ratingDTO.getShooting());

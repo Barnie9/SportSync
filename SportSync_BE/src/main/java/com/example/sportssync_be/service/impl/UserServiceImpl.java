@@ -25,32 +25,38 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO createUser(UserDTO userDTO) {
-        User user = userRepository.save(userMapper.dtoToEntity(userDTO));
-        return userMapper.entityToDto(user);
+        User user = userRepository.save(userMapper.toEntity(userDTO));
+        return userMapper.toDto(user);
+    }
+
+    @Override
+    public UserDTO getUserById(Long id) {
+        User user = userRepository.findById(id);
+        return userMapper.toDto(user);
     }
 
     @Override
     public UserDTO getUserByEmailAddressAndPassword(String emailAddress, String password) {
         User user = userRepository.findByEmailAddressAndPassword(emailAddress, password);
-        return userMapper.entityToDto(user);
+        return userMapper.toDto(user);
     }
 
     @Override
     public UserDTO getUserByUsername(String username) {
         User user = userRepository.findByUsername(username);
-        return userMapper.entityToDto(user);
+        return userMapper.toDto(user);
     }
 
     @Override
     public UserDTO getUserByEmailAddress(String emailAddress) {
         User user = userRepository.findByEmailAddress(emailAddress);
-        return userMapper.entityToDto(user);
+        return userMapper.toDto(user);
     }
 
     @Override
     public UserDTO getUserByToken(String token) {
         User user = userRepository.findByToken(token);
-        return userMapper.entityToDto(user);
+        return userMapper.toDto(user);
     }
 
     @Override

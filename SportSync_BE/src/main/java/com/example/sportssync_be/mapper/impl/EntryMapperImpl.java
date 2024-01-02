@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class EntryMapperImpl implements EntryMapper {
     @Override
-    public EntryDTO entityToDto(Entry entry) {
+    public EntryDTO toDto(Entry entry) {
         if (entry == null) {
             return null;
         }
@@ -24,7 +24,7 @@ public class EntryMapperImpl implements EntryMapper {
     }
 
     @Override
-    public Entry dtoToEntity(EntryDTO entryDTO) {
+    public Entry toEntity(EntryDTO entryDTO) {
         if (entryDTO == null) {
             return null;
         }

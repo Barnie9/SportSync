@@ -2,13 +2,27 @@ package com.example.sportssync_be.mapper.impl;
 
 import com.example.sportssync_be.dto.EventDTO;
 import com.example.sportssync_be.entity.Event;
+import com.example.sportssync_be.entity.User;
 import com.example.sportssync_be.mapper.EventMapper;
+import com.example.sportssync_be.mapper.UserMapper;
+import com.example.sportssync_be.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class EventMapperImpl implements EventMapper {
+
+    private final UserService userService;
+    private final UserMapper userMapper;
+
+    @Autowired
+    public EventMapperImpl(UserService userService, UserMapper userMapper) {
+        this.userService = userService;
+        this.userMapper = userMapper;
+    }
+
     @Override
-    public EventDTO entityToDto(Event event) {
+    public EventDTO toDto(Event event) {
         if (event == null) {
             return null;
         }
@@ -17,7 +31,8 @@ public class EventMapperImpl implements EventMapper {
 
         eventDTO.setId(event.getId());
 
-        eventDTO.setIdOrganizer(event.getOrganizer().getId());
+
+        // eventDTO.setIdOrganizer(event.getOrganizer().getId());
 
         eventDTO.setTitle(event.getTitle());
         eventDTO.setDescription(event.getDescription());
@@ -33,7 +48,7 @@ public class EventMapperImpl implements EventMapper {
     }
 
     @Override
-    public Event dtoToEntity(EventDTO eventDTO) {
+    public Event toEntity(EventDTO eventDTO) {
         if (eventDTO == null) {
             return null;
         }
@@ -42,7 +57,8 @@ public class EventMapperImpl implements EventMapper {
 
         event.setId(eventDTO.getId());
 
-        event.getOrganizer().setId(eventDTO.getIdOrganizer());
+        event.setOrganizer(userMapper.toEntity(userService.getUserById(eventDTO.getIdOrganizer())));
+        // event.getOrganizer().setId(eventDTO.getIdOrganizer());
 
         event.setTitle(eventDTO.getTitle());
         event.setDescription(eventDTO.getDescription());
