@@ -30,11 +30,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUserById(Long id) {
-        return null;
-    }
-
-    @Override
     public UserDTO getUserByEmailAddressAndPassword(String emailAddress, String password) {
         User user = userRepository.findByEmailAddressAndPassword(emailAddress, password);
         return userMapper.entityToDto(user);
@@ -69,15 +64,10 @@ public class UserServiceImpl implements UserService {
             existingUser.setEmailAddress(userDTO.getEmailAddress());
             existingUser.setPassword(userDTO.getPassword());
             existingUser.setToken(userDTO.getToken());
-            existingUser.setConfirmed(userDTO.isConfirmed());
+            existingUser.setIsConfirmed(userDTO.getIsConfirmed());
             existingUser.setCreatedAt(userDTO.getCreatedAt());
 
             userRepository.save(existingUser);
         }
-    }
-
-    @Override
-    public void deleteUserById(Long id) {
-
     }
 }

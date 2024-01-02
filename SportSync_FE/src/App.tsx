@@ -11,6 +11,7 @@ import Login from "./pages/Login/Login";
 import EmailConfirmation from "./pages/EmailConfirmation/EmailConfirmation";
 import Home from "./pages/Home/Home";
 import Events from "./pages/Events/Events";
+import Test from "./pages/Test/Test";
 
 function App() {
 	return (
@@ -21,14 +22,31 @@ function App() {
 
 					<Route path="/events" element={<Events />} />
 
-					<Route path="/login" element={<Login />} />
+					{!localStorage.getItem("emailAddress") ? (
+						<Route path="/login" element={<Login />} />
+					) : (
+						<Route path="/login" element={<Navigate to="/" />} />
+					)}
 
-					<Route path="/register" element={<Register />} />
+					{!localStorage.getItem("emailAddress") ? (
+						<Route path="/register" element={<Register />} />
+					) : (
+						<Route path="/register" element={<Navigate to="/" />} />
+					)}
 
-					<Route
-						path="/confirm-email/:token"
-						element={<EmailConfirmation />}
-					/>
+					{/* <Route path="/test" element={<Test />} /> */}
+
+					{!localStorage.getItem("emailAddress") ? (
+						<Route
+							path="/confirm-email/:token"
+							element={<EmailConfirmation />}
+						/>
+					) : (
+						<Route
+							path="/confirm-email/:token"
+							element={<Navigate to="/" />}
+						/>
+					)}
 
 					<Route path="*" element={<Navigate to="/" />} />
 				</Routes>

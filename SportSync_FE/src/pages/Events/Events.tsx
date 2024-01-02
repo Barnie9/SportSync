@@ -1,3 +1,7 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 // CSS
 import EventsCSS from "./Events.module.css";
 
@@ -5,10 +9,51 @@ import EventsCSS from "./Events.module.css";
 import NavBar from "../../components/NavBar/NavBar";
 
 function Events() {
+	const navigate = useNavigate();
+
+	const [isLoading, setIsLoading] = useState(true);
+
+	const [username, setUsername] = useState("");
+	const [profilePicturePath, setProfilePicturePath] = useState("");
+
+	const logout = () => {
+		localStorage.removeItem("emailAddress");
+
+		navigate("/login");
+	};
+
+	useEffect(() => {
+		if (!localStorage.getItem("emailAddress")) {
+			setIsLoading(false);
+		} else {
+			const getUser = async () => {
+				await axios.get(
+					"http://localhost:8090/users/" +
+						localStorage.getItem("emailAddress")
+				).then((response) => {
+					setUsername(response.data[0]);
+					setProfilePicturePath(response.data[1]);
+
+					setIsLoading(false);
+				});
+			};
+
+			getUser();
+		}
+	}, []);
+
+	if (isLoading) return null;
+
 	return (
 		<>
-			<NavBar selected="Events" />
-            <h1>Events</h1>
+			<div className={EventsCSS.page}>
+				<NavBar
+					selected="Events"
+					username={username}
+					profilePicturePath={profilePicturePath}
+				/>
+				<h1>{username}</h1>
+			</div>
 		</>
 	);
 }

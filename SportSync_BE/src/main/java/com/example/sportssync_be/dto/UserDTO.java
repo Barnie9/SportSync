@@ -7,14 +7,20 @@ import java.util.Date;
 @Data
 public class UserDTO {
     private Long id;
+
+    // Credentials
     private String username;
-    private String firstName;
-    private String lastName;
     private String emailAddress;
     private String password;
-    private String profilePicture;
+
+    // Details
+    private String firstName;
+    private String lastName;
     private String gender;
+    private String profilePicturePath;
+
+    // Activation
     private String token;
-    private boolean isConfirmed;
+    private Boolean isConfirmed;
     private Date createdAt;
 }

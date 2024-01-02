@@ -1,0 +1,20 @@
+.page {
+    flex-grow: 1;
+
+    /* display */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    /* background */
+    background: #ffffff;
+
+    /* dimension */
+    width: 100%;
+    min-height: 100vh;
+
+    /* border */
+    /* spacing */
+    /* text */
+}

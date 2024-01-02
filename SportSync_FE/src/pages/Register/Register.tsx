@@ -100,174 +100,132 @@ function Register() {
 	}, [errorMessages]);
 
 	return (
-		<Box className={RegisterCSS.background}>
-			<Grid container xs={10} md={8} className={RegisterCSS.container}>
-				<Grid
-					container
-					xs={12}
-					md={6}
-					className={RegisterCSS.left_column}
+		<div className={RegisterCSS.page}>
+			<div className={RegisterCSS.left_container}>
+				<button
+					className={RegisterCSS.home_button}
+					onClick={() => navigate("/home")}
 				>
-					<Grid item xs={12} md={12} className={RegisterCSS.item}>
-						<button className={RegisterCSS.home_button} onClick={() => navigate("/home")}>
-								<img
-									src={Logo}
-									alt="Logo"
-									className={RegisterCSS.logo}
-								></img>
-								<p className={RegisterCSS.app_title}>SportSync</p>
-						</button>
-					</Grid>
+					<img
+						src={Logo}
+						alt="Logo"
+						className={RegisterCSS.logo}
+					></img>
+					<div className={RegisterCSS.app_title}>SportSync</div>
+				</button>
 
-					<Grid item xs={12} md={12} className={RegisterCSS.item}>
-						<img src={Footballer} alt="footballer" className={RegisterCSS.image}></img>
-					</Grid>
-				</Grid>
-				<Grid
-					container
-					xs={12}
-					md={6}
-					className={RegisterCSS.right_column}
+				<img
+					src={Footballer}
+					alt="footballer"
+					className={RegisterCSS.image}
+				></img>
+			</div>
+			<div className={RegisterCSS.right_container}>
+				<div className={RegisterCSS.title}>Register</div>
+				<div className={RegisterCSS.form_container}>
+					<input
+						type="text"
+						placeholder="Username"
+						className={
+							usernameError === ""
+								? RegisterCSS.input
+								: RegisterCSS.input_error
+						}
+						value={username}
+						onChange={(event) => setUsername(event.target.value)}
+					></input>
+					<input
+						type="text"
+						placeholder="First Name"
+						className={RegisterCSS.input}
+						value={firstName}
+						onChange={(event) => setFirstName(event.target.value)}
+					></input>
+					<input
+						type="text"
+						placeholder="Last Name"
+						className={RegisterCSS.input}
+						value={lastName}
+						onChange={(event) => setLastName(event.target.value)}
+					></input>
+					<input
+						type="text"
+						placeholder="Email"
+						className={
+							emailAddressError === ""
+								? RegisterCSS.input
+								: RegisterCSS.input_error
+						}
+						value={emailAddress}
+						onChange={(event) =>
+							setEmailAddress(event.target.value)
+						}
+					></input>
+					<input
+						type="password"
+						placeholder="Password"
+						className={
+							passwordError === ""
+								? RegisterCSS.input
+								: RegisterCSS.input_error
+						}
+						value={password}
+						onChange={(event) => setPassword(event.target.value)}
+					></input>
+					<input
+						type="password"
+						placeholder="Confirm Password"
+						className={
+							confirmPasswordError === ""
+								? RegisterCSS.input
+								: RegisterCSS.input_error
+						}
+						value={confirmPassword}
+						onChange={(event) =>
+							setConfirmPassword(event.target.value)
+						}
+					></input>
+
+					<select
+						className={RegisterCSS.select}
+						value={gender}
+						onChange={(event) => setGender(event.target.value)}
+					>
+						<option value="" disabled hidden>
+							{" "}
+							Select gender{" "}
+						</option>
+						<option value="male">Male</option>
+						<option value="female">Female</option>
+						<option value="other">Other</option>
+					</select>
+
+					<div className={RegisterCSS.text_error}>
+						{usernameError}
+					</div>
+					<div className={RegisterCSS.text_error}>
+						{emailAddressError}
+					</div>
+					<div className={RegisterCSS.text_error}>
+						{passwordError}
+					</div>
+				</div>
+
+				<button
+					className={RegisterCSS.register_button}
+					onClick={handleRegister}
 				>
-					<Grid item xs={12} md={12} className={RegisterCSS.item}>
-						<p className={RegisterCSS.title}>Register</p>
-					</Grid>
+					Register
+				</button>
 
-					<Grid item xs={12} md={12} className={RegisterCSS.item}>
-						<input
-							type="text"
-							placeholder="Username"
-							className={
-								usernameError === ""
-									? RegisterCSS.input
-									: RegisterCSS.input_error
-							}
-							value={username}
-							onChange={(event) =>
-								setUsername(event.target.value)
-							}
-						></input>
-					</Grid>
-					<Grid item xs={12} md={12} className={RegisterCSS.item}>
-						<input
-							type="text"
-							placeholder="First Name"
-							className={RegisterCSS.input}
-							value={firstName}
-							onChange={(event) =>
-								setFirstName(event.target.value)
-							}
-						></input>
-					</Grid>
-					<Grid item xs={12} md={12} className={RegisterCSS.item}>
-						<input
-							type="text"
-							placeholder="Last Name"
-							className={RegisterCSS.input}
-							value={lastName}
-							onChange={(event) =>
-								setLastName(event.target.value)
-							}
-						></input>
-					</Grid>
-					<Grid item xs={12} md={12} className={RegisterCSS.item}>
-						<input
-							type="text"
-							placeholder="Email"
-							className={
-								emailAddressError === ""
-									? RegisterCSS.input
-									: RegisterCSS.input_error
-							}
-							value={emailAddress}
-							onChange={(event) =>
-								setEmailAddress(event.target.value)
-							}
-						></input>
-					</Grid>
-					<Grid item xs={12} md={12} className={RegisterCSS.item}>
-						<input
-							type="password"
-							placeholder="Password"
-							className={
-								passwordError === ""
-									? RegisterCSS.input
-									: RegisterCSS.input_error
-							}
-							value={password}
-							onChange={(event) =>
-								setPassword(event.target.value)
-							}
-						></input>
-					</Grid>
-					<Grid item xs={12} md={12} className={RegisterCSS.item}>
-						<input
-							type="password"
-							placeholder="Confirm Password"
-							className={
-								confirmPasswordError === ""
-									? RegisterCSS.input
-									: RegisterCSS.input_error
-							}
-							value={confirmPassword}
-							onChange={(event) =>
-								setConfirmPassword(event.target.value)
-							}
-						></input>
-					</Grid>
-
-					<Grid item xs={12} md={12} className={RegisterCSS.item}>
-						<select
-							className={RegisterCSS.select}
-							value={gender}
-							onChange={(event) => setGender(event.target.value)}
-						>
-							<option value="" disabled hidden>
-								{" "}
-								Select gender{" "}
-							</option>
-							<option value="male">Male</option>
-							<option value="female">Female</option>
-							<option value="other">Other</option>
-						</select>
-					</Grid>
-
-					<Grid item xs={12} md={12} className={RegisterCSS.item}>
-						<p className={RegisterCSS.text_error}>
-							{usernameError}
-						</p>
-					</Grid>
-					<Grid item xs={12} md={12} className={RegisterCSS.item}>
-						<p className={RegisterCSS.text_error}>
-							{emailAddressError}
-						</p>
-					</Grid>
-					<Grid item xs={12} md={12} className={RegisterCSS.item}>
-						<p className={RegisterCSS.text_error}>
-							{passwordError}
-						</p>
-					</Grid>
-
-					<Grid item xs={12} md={12} className={RegisterCSS.item}>
-						<button
-							className={RegisterCSS.register_button}
-							onClick={handleRegister}
-						>
-							Register
-						</button>
-					</Grid>
-
-					<Grid item xs={12} md={12} className={RegisterCSS.item}>
-						<p className={RegisterCSS.text}>
-							Already have an account?{" "}
-							<Link to="/login" className={RegisterCSS.link}>
-								Login here
-							</Link>
-						</p>
-					</Grid>
-				</Grid>
-			</Grid>
-		</Box>
+				<div className={RegisterCSS.text}>
+					Already have an account?{" "}
+					<Link to="/login" className={RegisterCSS.link}>
+						Login here
+					</Link>
+				</div>
+			</div>
+		</div>
 	);
 }
 

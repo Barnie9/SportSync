@@ -9,20 +9,15 @@ import java.util.List;
 
 @Entity
 @Data
-public class User{
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Credentials
     @Column
     private String username;
-
-    @Column
-    private String firstName;
-
-    @Column
-    private String lastName;
 
     @Column
     private String emailAddress;
@@ -30,26 +25,26 @@ public class User{
     @Column
     private String password;
 
+    // Details
     @Column
-    private String profilePicture;
+    private String firstName;
+
+    @Column
+    private String lastName;
 
     @Column
     private String gender;
 
     @Column
+    private String profilePicturePath;
+
+    // Activation
+    @Column
     private String token;
 
     @Column
-    private boolean isConfirmed;
+    private Boolean isConfirmed;
 
     @Column
     private Date createdAt;
-
-
-
-    @OneToMany(mappedBy = "organizer")
-    private List<Event> eventList;
-
-    @OneToMany(mappedBy = "user")
-    private List<Entry> entryList;
 }
