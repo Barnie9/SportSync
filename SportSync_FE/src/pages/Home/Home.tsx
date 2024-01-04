@@ -7,6 +7,7 @@ import HomeCSS from "./Home.module.css";
 
 // Components
 import NavBar from "../../components/NavBar/NavBar";
+import Menu from "../../components/Menu/Menu";
 
 function Home() {
 	const navigate = useNavigate();
@@ -47,12 +48,14 @@ function Home() {
 	return (
 		<>
 			<div className={HomeCSS.page}>
-				<NavBar
+				{/* <NavBar
 					selected="Home"
 					username={username}
 					profilePicturePath={profilePicturePath}
 				/>
-				<h1>{username}</h1>
+				<h1>{username}</h1> */}
+
+				<Menu />
 			</div>
 		</>
 	);
