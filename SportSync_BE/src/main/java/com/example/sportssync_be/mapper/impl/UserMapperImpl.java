@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapperImpl implements UserMapper {
-    public UserDTO entityToDto(User user) {
+    public UserDTO toDto(User user) {
         if ( user == null ) {
             return null;
         }
@@ -32,7 +32,7 @@ public class UserMapperImpl implements UserMapper {
         return userDTO;
     }
 
-    public User dtoToEntity(UserDTO userDTO) {
+    public User toEntity(UserDTO userDTO) {
         if ( userDTO == null ) {
             return null;
         }
