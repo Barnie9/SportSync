@@ -1,18 +1,16 @@
 .page {
-    flex-grow: 1;
-
     /* display */
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
 
     /* background */
     background: #ffffff;
 
     /* dimension */
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
 
     /* border */
     /* spacing */

@@ -2,10 +2,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
-// Material UI
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-
 // CSS
 import RegisterCSS from "./Register.module.css";
 
@@ -17,12 +13,9 @@ function Register() {
 	const navigate = useNavigate();
 
 	const [username, setUsername] = useState("");
-	const [firstName, setFirstName] = useState("");
-	const [lastName, setLastName] = useState("");
 	const [emailAddress, setEmailAddress] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
-	const [gender, setGender] = useState("");
 
 	const [usernameError, setUsernameError] = useState("");
 	const [emailAddressError, setEmailAddressError] = useState("");
@@ -51,7 +44,7 @@ function Register() {
 				"* Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter and one number"
 			);
 			setConfirmPasswordError("");
-		} else if (errorMessages[2] === "notMatching") {
+		} else if (errorMessages[2] === "mismatch") {
 			setPasswordError("* Passwords do not match");
 			setConfirmPasswordError("* Passwords do not match");
 		} else if (errorMessages[2] === "ok") {
@@ -64,12 +57,9 @@ function Register() {
 		try {
 			if (
 				username === "" ||
-				firstName === "" ||
-				lastName === "" ||
 				emailAddress === "" ||
 				password === "" ||
-				confirmPassword === "" ||
-				gender === ""
+				confirmPassword === ""
 			) {
 				alert("Please fill out all fields");
 				return;
@@ -77,17 +67,14 @@ function Register() {
 
 			await axios.post("http://localhost:8090/register", {
 				username: username,
-				firstName: firstName,
-				lastName: lastName,
 				emailAddress: emailAddress,
 				password: password,
-				confirmPassword: confirmPassword,
-				gender: gender,
+				confirmPassword: confirmPassword
 			});
 
 			navigate("/login");
 		} catch (error: any) {
-			setErrorMessages(error.response.data.split("|"));
+			setErrorMessages(error.response.data.split(","));
 		}
 	};
 
@@ -136,20 +123,6 @@ function Register() {
 					></input>
 					<input
 						type="text"
-						placeholder="First Name"
-						className={RegisterCSS.input}
-						value={firstName}
-						onChange={(event) => setFirstName(event.target.value)}
-					></input>
-					<input
-						type="text"
-						placeholder="Last Name"
-						className={RegisterCSS.input}
-						value={lastName}
-						onChange={(event) => setLastName(event.target.value)}
-					></input>
-					<input
-						type="text"
 						placeholder="Email"
 						className={
 							emailAddressError === ""
@@ -185,20 +158,6 @@ function Register() {
 							setConfirmPassword(event.target.value)
 						}
 					></input>
-
-					<select
-						className={RegisterCSS.select}
-						value={gender}
-						onChange={(event) => setGender(event.target.value)}
-					>
-						<option value="" disabled hidden>
-							{" "}
-							Select gender{" "}
-						</option>
-						<option value="male">Male</option>
-						<option value="female">Female</option>
-						<option value="other">Other</option>
-					</select>
 
 					<div className={RegisterCSS.text_error}>
 						{usernameError}

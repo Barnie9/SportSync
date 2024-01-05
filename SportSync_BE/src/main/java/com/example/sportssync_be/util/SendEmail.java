@@ -1,4 +1,4 @@
-package com.example.sportssync_be.utils;
+package com.example.sportssync_be.util;
 
 import java.util.Properties;
 
