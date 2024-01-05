@@ -1,8 +1,9 @@
 package com.example.sportssync_be.controller;
 
-import com.example.sportssync_be.dto.UserDTO;
+import com.example.sportssync_be.dto.UserDto;
 import com.example.sportssync_be.service.UserService;
-import com.example.sportssync_be.utils.SendEmail;
+import com.example.sportssync_be.util.SendEmail;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,51 +15,47 @@ import java.util.Date;
 import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 public class EmailConfirmationController {
-    private final UserService userService;
 
-    @Autowired
-    public EmailConfirmationController(UserService userService) {
-        this.userService = userService;
-    }
+    private final UserService userService;
 
     @PostMapping("/confirm-email")
     public ResponseEntity<String> confirmEmail(@RequestBody Map<String, String> body) {
-        UserDTO userDTO = userService.getUserByToken(body.get("token"));
+        UserDto userDto = userService.getUserByToken(body.get("token"));
 
-        if (userDTO == null) {
+        if (userDto == null) {
             return ResponseEntity.badRequest().body("Invalid token");
         }
 
-        if (userDTO.getIsConfirmed()) {
+        if (userDto.isConfirmed()) {
             return ResponseEntity.badRequest().body("Email already confirmed");
         }
 
         // 21600000 milliseconds = 6 hours
-        if (new Date().getTime() - userDTO.getCreatedAt().getTime() > 21600000) {
+        if (new Date().getTime() - userDto.createdAt().getTime() > 21600000) {
             return ResponseEntity.badRequest().body("Expired token");
         }
 
-        userDTO.setIsConfirmed(true);
+        UserDto updatedUserDTO = new UserDto(userDto.id(), userDto.rating(), userDto.username(), userDto.emailAddress(), userDto.password(), userDto.firstName(), userDto.lastName(), userDto.birthDate(), userDto.phoneNumber(), userDto.foot(), userDto.position(), userDto.profilePicturePath(), userDto.token(), true, userDto.createdAt());
 
-        userService.updateUser(userDTO.getId(), userDTO);
+        userService.updateUser(updatedUserDTO.id(), updatedUserDTO);
 
         return ResponseEntity.ok().body("Email confirmed successfully");
     }
 
     @PostMapping("/generate-new-email-confirmation-token")
     public ResponseEntity<String> generateNewEmailConfirmationToken(@RequestBody Map<String, String> body) {
-        UserDTO userDTO = userService.getUserByToken(body.get("token"));
+        UserDto userDto = userService.getUserByToken(body.get("token"));
 
         String token = RandomStringUtils.random(16, true, true);
         Date createdAt = new Date();
 
-        userDTO.setToken(token);
-        userDTO.setCreatedAt(createdAt);
+        UserDto updatedUserDTO = new UserDto(userDto.id(), userDto.rating(), userDto.username(), userDto.emailAddress(), userDto.password(), userDto.firstName(), userDto.lastName(), userDto.birthDate(), userDto.phoneNumber(), userDto.foot(), userDto.position(), userDto.profilePicturePath(), token, false, createdAt);
 
-        userService.updateUser(userDTO.getId(), userDTO);
+        userService.updateUser(updatedUserDTO.id(), updatedUserDTO);
 
-        SendEmail.sendConfirmationEmail(userDTO.getEmailAddress(), token);
+        SendEmail.sendConfirmationEmail(updatedUserDTO.emailAddress(), token);
 
         return ResponseEntity.ok().body("New email confirmation token generated successfully");
     }

@@ -1,11 +1,11 @@
 package com.example.sportssync_be.service;
 
-import com.example.sportssync_be.dto.EventDTO;
+import com.example.sportssync_be.dto.EventDto;
+import com.example.sportssync_be.entity.Event;
+import com.example.sportssync_be.repository.EventRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public interface EventService {
-    EventDTO createEvent(EventDTO eventDTO);
-    EventDTO getEventById(Long id);
-    EventDTO deleteEventById(Long id);
-    EventDTO updateEvent(Long id, EventDTO eventDTO);
-
+@Service
+public class EventService {
 }

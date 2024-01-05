@@ -1,28 +1,19 @@
 package com.example.sportssync_be.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Rating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    // Relations
-    @ManyToOne
-    @JoinColumn(name = "id_event", referencedColumnName = "id")
-    private Event event;
-
-    @ManyToOne
-    @JoinColumn(name = "id_rater_user", referencedColumnName = "id")
-    private User raterUser;
-
-    @ManyToOne
-    @JoinColumn(name = "id_rated_user", referencedColumnName = "id")
-    private User ratedUser;
 
     // Stats
     @Column
@@ -42,8 +33,4 @@ public class Rating {
 
     @Column
     private Integer physical;
-
-    // Approval
-    @Column
-    private Boolean isApproved;
 }

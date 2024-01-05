@@ -1,65 +1,32 @@
 package com.example.sportssync_be.controller;
 
-import com.example.sportssync_be.dto.UserDTO;
+import com.example.sportssync_be.dto.RatingDto;
+import com.example.sportssync_be.dto.UserDto;
+import com.example.sportssync_be.service.RatingService;
 import com.example.sportssync_be.service.UserService;
-import com.example.sportssync_be.utils.SendEmail;
+import com.example.sportssync_be.util.SendEmail;
+import com.example.sportssync_be.util.UserUtil;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 public class RegisterController {
 
     private final UserService userService;
-
-    @Autowired
-    public RegisterController(UserService userService) {
-        this.userService = userService;
-    }
+    private final UserUtil userUtil;
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody Map<String, String> body) {
-        String errorMessages = "";
-        boolean hasErrors = false;
+        String errorMessages = userUtil.validateUser(body.get("username"), body.get("emailAddress"), body.get("password"), body.get("confirmPassword"));
 
-        UserDTO foundUserByUsername = userService.getUserByUsername(body.get("username"));
-        if (foundUserByUsername != null) {
-            errorMessages += "present|";
-            hasErrors = true;
-        } else {
-            errorMessages += "ok|";
-        }
-
-        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z]{2,}$";
-        if (!body.get("emailAddress").matches(emailRegex)) {
-            errorMessages += "invalid|";
-            hasErrors = true;
-        } else {
-            UserDTO foundUserByEmailAddress = userService.getUserByEmailAddress(body.get("emailAddress"));
-            if (foundUserByEmailAddress != null) {
-                errorMessages += "present|";
-                hasErrors = true;
-            } else {
-                errorMessages += "ok|";
-            }
-        }
-
-        String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d]{8,}$";
-        if (!body.get("password").matches(passwordRegex)) {
-            errorMessages += "invalid";
-            hasErrors = true;
-        } else if (!body.get("password").equals(body.get("confirmPassword"))) {
-            errorMessages += "notMatching";
-            hasErrors = true;
-        } else {
-            errorMessages += "ok";
-        }
-
-        if (hasErrors) {
+        if (!errorMessages.equals("ok,ok,ok")) {
             return ResponseEntity.badRequest().body(errorMessages);
         }
 
@@ -69,21 +36,13 @@ public class RegisterController {
         boolean isConfirmed = false;
         Date createdAt = new Date();
 
-        UserDTO userDTO = new UserDTO();
+        RatingDto ratingDto = new RatingDto(null, 0, 0, 0, 0, 0, 0);
 
-        userDTO.setUsername(body.get("username"));
-        userDTO.setFirstName(body.get("firstName"));
-        userDTO.setLastName(body.get("lastName"));
-        userDTO.setEmailAddress(body.get("emailAddress"));
-        userDTO.setPassword(body.get("password"));
-        userDTO.setGender(body.get("gender"));
-        userDTO.setToken(token);
-        userDTO.setIsConfirmed(isConfirmed);
-        userDTO.setCreatedAt(createdAt);
+        UserDto userDTO = new UserDto(null, ratingDto, body.get("username"), body.get("emailAddress"), body.get("password"), null, null, null, null, null, null, null, token, isConfirmed, createdAt);
 
         userService.createUser(userDTO);
 
-        SendEmail.sendConfirmationEmail(body.get("emailAddress"), token);
+        SendEmail.sendConfirmationEmail(userDTO.emailAddress(), token);
 
         return ResponseEntity.ok().body("User created successfully");
     }
