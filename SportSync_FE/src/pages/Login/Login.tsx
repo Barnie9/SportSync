@@ -9,7 +9,11 @@ import LoginCSS from "./Login.module.css";
 import Logo from "../../images/logo.png";
 import Footballer from "../../images/footballer.png";
 
-function Login() {
+interface Props {
+	onChangeUsername: (username: string) => void;
+}
+
+function Login({onChangeUsername}: Props) {
 	const navigate = useNavigate();
 
 	const [username, setUsername] = useState("");
@@ -24,12 +28,17 @@ function Login() {
 				return;
 			}
 
-			const response = await axios.post("http://localhost:8090/login", {
-				username: username,
-				password: password,
-			});
+			const response = await axios.post(
+				"http://localhost:8090/users/login",
+				{
+					username: username,
+					password: password,
+				}
+			);
 
 			localStorage.setItem("username", response.data);
+
+			onChangeUsername(response.data);
 
 			navigate("/");
 		} catch (error: any) {
@@ -44,11 +53,7 @@ function Login() {
 					className={LoginCSS.home_button}
 					onClick={() => navigate("/home")}
 				>
-					<img
-						src={Logo}
-						alt="Logo"
-						className={LoginCSS.logo}
-					></img>
+					<img src={Logo} alt="Logo" className={LoginCSS.logo}></img>
 					<div className={LoginCSS.app_title}>SportSync</div>
 				</button>
 
@@ -67,9 +72,7 @@ function Login() {
 					placeholder="Username"
 					className={LoginCSS.input}
 					value={username}
-					onChange={(event) =>
-						setUsername(event.target.value)
-					}
+					onChange={(event) => setUsername(event.target.value)}
 				></input>
 
 				<input
@@ -77,17 +80,12 @@ function Login() {
 					placeholder="Password"
 					className={LoginCSS.input}
 					value={password}
-					onChange={(event) =>
-						setPassword(event.target.value)
-					}
+					onChange={(event) => setPassword(event.target.value)}
 				></input>
 
 				<div className={LoginCSS.text_error}>{errorMessage}</div>
 
-				<button
-					className={LoginCSS.login_button}
-					onClick={handleLogin}
-				>
+				<button className={LoginCSS.login_button} onClick={handleLogin}>
 					Login
 				</button>
 

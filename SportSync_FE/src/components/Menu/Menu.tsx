@@ -1,16 +1,8 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-// FontAwesome
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-	faHouse,
-	faCalendarCheck,
-	faUser,
-	faAngleDown,
-	faCircle as faCircleSolid,
-	faArrowRightFromBracket,
-} from "@fortawesome/free-solid-svg-icons";
-import { faCircle as faCircleRegular } from "@fortawesome/free-regular-svg-icons";
+// Icons
+import { HomeRounded, EventRounded, LoginRounded, AccountCircle, ExpandMoreRounded, Circle, CircleOutlined, LogoutRounded } from '@mui/icons-material';
 
 // Images
 import Logo from "../../images/logo.png";
@@ -18,8 +10,28 @@ import Logo from "../../images/logo.png";
 // CSS
 import MenuCSS from "./Menu.module.css";
 
-function Menu(props: { selectedPage: string }) {
+interface Props {
+	selectedPage: string;
+	onChangeUsername: (username: string) => void;
+}
+
+function Menu({ selectedPage, onChangeUsername }: Props) {
 	const navigate = useNavigate();
+
+	const [username, setUsername] = useState("");
+
+	useEffect(() => {
+		setUsername(localStorage.getItem("username") || "");
+	}, [username]);
+
+	const logout = () => {
+		localStorage.clear();
+
+		setUsername("");
+		onChangeUsername("");
+
+		navigate("/");
+	};
 
 	return (
 		<>
@@ -35,7 +47,7 @@ function Menu(props: { selectedPage: string }) {
 
 				<div
 					className={
-						props.selectedPage === "Home"
+						selectedPage === "Home"
 							? MenuCSS["menu_item_selected"]
 							: MenuCSS["menu_item"]
 					}
@@ -44,14 +56,14 @@ function Menu(props: { selectedPage: string }) {
 					}}
 				>
 					<div className={MenuCSS["menu_item_icon"]}>
-						<FontAwesomeIcon icon={faHouse} />
+						<HomeRounded />
 					</div>
 					<div className={MenuCSS["menu_item_text"]}>Home</div>
 				</div>
 
 				<div
 					className={
-						props.selectedPage === "Events"
+						selectedPage === "Events"
 							? MenuCSS["menu_item_selected"]
 							: MenuCSS["menu_item"]
 					}
@@ -60,82 +72,100 @@ function Menu(props: { selectedPage: string }) {
 					}}
 				>
 					<div className={MenuCSS["menu_item_icon"]}>
-						<FontAwesomeIcon icon={faCalendarCheck} />
+						<EventRounded />
 					</div>
 					<div className={MenuCSS["menu_item_text"]}>Events</div>
 				</div>
 
-				<div
-					className={MenuCSS["menu_item"]}
-					onClick={() => {
-						navigate("/profile");
-					}}
-				>
-					<div className={MenuCSS["menu_item_icon"]}>
-						<FontAwesomeIcon icon={faUser} />
-					</div>
-					<div className={MenuCSS["menu_item_text"]}>
-						<div className={MenuCSS["left_text"]}>Barnie</div>
-						<div className={MenuCSS["right_text"]}>
-							<FontAwesomeIcon icon={faAngleDown} size="xs" />
+				{username ? (
+					<>
+						<div
+							className={MenuCSS["menu_item"]}
+							onClick={() => {
+								navigate("/profile");
+							}}
+						>
+							<div className={MenuCSS["menu_item_icon"]}>
+								<AccountCircle />
+							</div>
+							<div className={MenuCSS["menu_item_text"]}>
+								<div className={MenuCSS["left_text"]}>
+									{username}
+								</div>
+								<div className={MenuCSS["right_text"]}>
+									<ExpandMoreRounded style={{ fontSize: 30 }} />
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
 
-				<div
-					className={
-						props.selectedPage === "Profile"
-							? MenuCSS["submenu_item_selected"]
-							: MenuCSS["submenu_item"]
-					}
-					onClick={() => {
-						navigate("/profile");
-					}}
-				>
-					<div className={MenuCSS["menu_item_icon"]}>
-						<FontAwesomeIcon
-							icon={
-								props.selectedPage === "Profile"
-									? faCircleSolid
-									: faCircleRegular
+						<div
+							className={
+								selectedPage === "Profile"
+									? MenuCSS["submenu_item_selected"]
+									: MenuCSS["submenu_item"]
 							}
-							size="xs"
-						/>
-					</div>
-					<div className={MenuCSS["menu_item_text"]}>Profile</div>
-				</div>
-
-				<div
-					className={
-						props.selectedPage === "My Events"
-							? MenuCSS["submenu_item_selected"]
-							: MenuCSS["submenu_item"]
-					}
-				>
-					<div className={MenuCSS["menu_item_icon"]}>
-						<FontAwesomeIcon
-							icon={
-								props.selectedPage === "My Events"
-									? faCircleSolid
-									: faCircleRegular
-							}
-							size="xs"
-						/>
-					</div>
-					<div className={MenuCSS["menu_item_text"]}>My Events</div>
-				</div>
-
-				<div className={MenuCSS["logout_container"]}>
-					<div className={MenuCSS["logout_line"]}>
-						<div className={MenuCSS["logout_icon"]}>
-							<FontAwesomeIcon
-								icon={faArrowRightFromBracket}
-								size="xl"
-							/>
+							onClick={() => {
+								navigate("/profile");
+							}}
+						>
+							<div className={MenuCSS["menu_item_icon"]}>
+								{selectedPage === "Profile" ? (
+									<Circle style={{ fontSize: 15 }} />
+								) : (
+									<CircleOutlined style={{ fontSize: 15 }} />
+								)}
+							</div>
+							<div className={MenuCSS["menu_item_text"]}>
+								Profile
+							</div>
 						</div>
-						<div className={MenuCSS["logout_text"]}>Logout</div>
+
+						<div
+							className={
+								selectedPage === "My Events"
+									? MenuCSS["submenu_item_selected"]
+									: MenuCSS["submenu_item"]
+							}
+						>
+							<div className={MenuCSS["menu_item_icon"]}>
+							{selectedPage === "My Events" ? (
+									<Circle style={{ fontSize: 15 }} />
+								) : (
+									<CircleOutlined style={{ fontSize: 15 }} />
+								)}
+							</div>
+							<div className={MenuCSS["menu_item_text"]}>
+								My Events
+							</div>
+						</div>
+
+						<div className={MenuCSS["logout_container"]}>
+							<div
+								className={MenuCSS["logout_line"]}
+								onClick={logout}
+							>
+								<div className={MenuCSS["logout_icon"]}>
+									<LogoutRounded />
+								</div>
+								<div className={MenuCSS["logout_text"]}>
+									Logout
+								</div>
+							</div>
+						</div>
+					</>
+				) : (
+					<div
+						className={MenuCSS["menu_item"]}
+						onClick={() => {
+							navigate("/login");
+						}}
+					>
+						<div className={MenuCSS["menu_item_icon"]}>
+							<LoginRounded />
+						</div>
+						<div className={MenuCSS["menu_item_text"]}>Login</div>
 					</div>
-				</div>
+				)}
 			</div>
 		</>
 	);
