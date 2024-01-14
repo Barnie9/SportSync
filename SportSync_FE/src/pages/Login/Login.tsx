@@ -24,7 +24,7 @@ function Login() {
 				return;
 			}
 
-			const response = await axios.post("http://localhost:8090/login", {
+			const response = await axios.post("http://86.125.232.27:8090/login", {
 				username: username,
 				password: password,
 			});

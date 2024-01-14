@@ -36,6 +36,17 @@ public class UserUtil {
     public boolean isPasswordMatching(String password, String confirmPassword) {
         return password.equals(confirmPassword);
     }
+    private boolean isFootValid(String foot) {
+        return foot.equalsIgnoreCase("left") || foot.equalsIgnoreCase("right");
+    }
+
+    private boolean isNameValid(String name) {
+        // Your name validation logic (e.g., allow only letters, minimum/maximum length, etc.)
+        return name.matches("^[a-zA-Z]+$");
+    }
+
+
+
 
     public String validateUser(String username, String emailAddress, String password, String confirmPassword) {
         String errorMessages = "";
@@ -64,6 +75,57 @@ public class UserUtil {
             errorMessages += "ok";
         }
 
+
         return errorMessages;
     }
+
+
+
+    public String updateUser(String username, String emailAddress, String password, String firstName,String lastName,String birthDate,String phoneNumber,String foot,String position) {
+        String errorMessages = "";
+
+        if (!isUsernameValid(username)) {
+            errorMessages += "invalid,";
+        } else if (!isUsernameUnique(username)) {
+            errorMessages += "present,";
+        } else {
+            errorMessages += "ok,";
+        }
+
+        if (!isEmailAddressValid(emailAddress)) {
+            errorMessages += "invalid,";
+        } else if (!isEmailAddressUnique(emailAddress)) {
+            errorMessages += "present,";
+        } else {
+            errorMessages += "ok,";
+        }
+
+        if (!isPasswordValid(password)) {
+            errorMessages += "invalid";
+        } else {
+            errorMessages += "ok";
+        }
+        if(!isFootValid(foot)){
+            errorMessages += "invalid,";
+        }else{
+            errorMessages += "ok";
+        }
+
+        if(!isNameValid(firstName)){
+            errorMessages += "invalid,";
+        }else{
+            errorMessages += "ok";
+        }
+        if(!isNameValid(lastName)){
+            errorMessages += "invalid,";
+        }else{
+            errorMessages += "ok";
+        }
+
+        return errorMessages;
+    }
+
+
+
+
 }

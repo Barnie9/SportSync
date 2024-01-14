@@ -42,6 +42,23 @@ public class Event {
     @Column
     private LocalTime endTime;
 
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", organizer=" + organizer +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", startDate=" + startDate +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", location='" + location + '\'' +
+                ", fieldType='" + fieldType + '\'' +
+                ", maxPlayers=" + maxPlayers +
+                ", price=" + price +
+                '}';
+    }
+
     @Column
     private String location;
 
@@ -53,4 +70,6 @@ public class Event {
 
     @Column
     private Double price;
+
+
 }

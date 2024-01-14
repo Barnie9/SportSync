@@ -61,11 +61,11 @@ function Register() {
 				password === "" ||
 				confirmPassword === ""
 			) {
-				alert("Please fill out all fields");
+				alert("Please fill out all fields!");
 				return;
 			}
 
-			await axios.post("http://localhost:8090/register", {
+			await axios.post("http://86.125.232.27:8090/register", {
 				username: username,
 				emailAddress: emailAddress,
 				password: password,
