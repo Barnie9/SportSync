@@ -8,46 +8,15 @@ import HomeCSS from "./Home.module.css";
 // Components
 import Menu from "../../components/Menu/Menu";
 
-function Home() {
-	const navigate = useNavigate();
+interface Props {
+	onChangeUsername: (username: string) => void;
+}
 
-	const [isLoading, setIsLoading] = useState(true);
-
-	const [username, setUsername] = useState("");
-	const [profilePicturePath, setProfilePicturePath] = useState("");
-
-	const logout = () => {
-		localStorage.removeItem("emailAddress");
-
-		navigate("/login");
-	};
-
-	useEffect(() => {
-		if (!localStorage.getItem("emailAddress")) {
-			setIsLoading(false);
-		} else {
-			const getUser = async () => {
-				await axios.get(
-					"http://localhost:8090/users/" +
-						localStorage.getItem("emailAddress")
-				).then((response) => {
-					setUsername(response.data[0]);
-					setProfilePicturePath(response.data[1]);
-
-					setIsLoading(false);
-				});
-			};
-
-			getUser();
-		}
-	}, []);
-
-	if (isLoading) return null;
-
+function Home({ onChangeUsername }: Props) {
 	return (
 		<>
 			<div className={HomeCSS.page}>
-				<Menu selectedPage="Home" />
+				<Menu selectedPage="Home" onChangeUsername={onChangeUsername} />
 			</div>
 		</>
 	);

@@ -5,6 +5,8 @@
     justify-content: flex-start;
     align-items: flex-start;
 
+    position: fixed;
+
     background-color: #1d203f;
 
     width: 20%;

@@ -6,7 +6,11 @@ import ProfileCSS from "./Profile.module.css";
 // Components
 import Menu from "../../components/Menu/Menu";
 
-function Profile() {
+interface Props {
+	onChangeUsername: (username: string) => void;
+}
+
+function Profile({ onChangeUsername }: Props) {
 	const [username, setUsername] = useState(
 		localStorage.getItem("username") || ""
 	);
@@ -14,7 +18,7 @@ function Profile() {
 	return (
 		<>
 			<div className={ProfileCSS.page}>
-				<Menu selectedPage="Profile" />
+				<Menu selectedPage="Profile" onChangeUsername={onChangeUsername} />
 
 				<div className={ProfileCSS.content}>
 					<div className={ProfileCSS.container}>
