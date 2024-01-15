@@ -6,7 +6,7 @@
     align-items: flex-start;
 
     /* background */
-    background: #ffffff;
+    background: #1d203f;
 
     /* dimension */
     width: 100%;
@@ -16,3 +16,85 @@
     /* spacing */
     /* text */
 }
+
+.container{
+    width: 100%;
+    height: 100vh;
+    background: #1d203f;
+    padding-left: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.ct_left{
+    background-color: rgb(192, 30, 30);
+    width: 50%;
+    border-radius: 20px 0 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #323666;
+    z-index: 2;
+}
+.ct_right{
+    background-color: #f1f2f3;
+    width: 50%;
+    border-radius: 0 20px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #323666;
+    z-index: 2;
+    
+}
+
+
+.recentEvents{
+    align-items: center;
+    margin-top: 100px;
+}
+
+.rE_leftArrow{
+    margin: 10px;
+    cursor: pointer;
+
+}
+
+.rE_rightArrow{
+    margin:10px;
+    cursor: pointer;
+
+}
+
+.rE_content{
+    display: flex;
+    align-items: center;
+}
+
+.rE_title{
+    color: white;
+    font-size: x-large;
+}
+
+.popular_content{
+    display: flex;
+    align-items: center;
+}
+
+.popular_title{
+    color: white;
+    font-size: x-large;
+    margin-top: 50px;
+}
+.popular_rightArrow{
+    margin:10px;
+    cursor: pointer;
+}
+.popular_leftArrow{
+    margin: 10px;
+    cursor: pointer;
+
+}
+

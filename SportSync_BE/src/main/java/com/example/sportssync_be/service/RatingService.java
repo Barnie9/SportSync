@@ -32,5 +32,8 @@ public class RatingService {
             ratingRepository.save(existingRating.get());
         }
     }
-
+    public RatingDto getRatingById(Long id) {
+        Rating rating = ratingRepository.findById(id).get();
+        return RatingMapper.toDto(rating);
+    }
 }

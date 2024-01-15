@@ -1,4 +1,3 @@
-
 import Rating from './Rating';
 
 interface User {
