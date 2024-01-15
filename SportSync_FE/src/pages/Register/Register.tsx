@@ -9,7 +9,11 @@ import RegisterCSS from "./Register.module.css";
 import Logo from "../../images/logo.png";
 import Footballer from "../../images/footballer.png";
 
-function Register() {
+interface Props {
+	onChangeUsername: (username: string) => void;
+}
+
+function Register({ onChangeUsername }: Props) {
 	const navigate = useNavigate();
 
 	const [username, setUsername] = useState("");
@@ -65,11 +69,11 @@ function Register() {
 				return;
 			}
 
-			await axios.post("http://localhost:8090/register", {
+			await axios.post("http://localhost:8090/users/register", {
 				username: username,
 				emailAddress: emailAddress,
 				password: password,
-				confirmPassword: confirmPassword
+				confirmPassword: confirmPassword,
 			});
 
 			navigate("/login");

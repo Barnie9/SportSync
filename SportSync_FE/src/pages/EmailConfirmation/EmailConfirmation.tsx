@@ -9,7 +9,11 @@ import Grid from "@mui/material/Grid";
 // CSS
 import EmailConfirmationCSS from "./EmailConfirmation.module.css";
 
-function EmailComfirmation() {
+interface Props {
+	onChangeUsername: (username: string) => void;
+}
+
+function EmailComfirmation({ onChangeUsername }: Props) {
 	const navigate = useNavigate();
 
 	const params = useParams();
@@ -19,7 +23,7 @@ function EmailComfirmation() {
 	useEffect(() => {
 		const confirmEmail = async () => {
 			try {
-				await axios.post("http://localhost:8090/confirm-email", {
+				await axios.post("http://localhost:8090/users/confirm-email", {
 					token: params.token,
 				});
 
@@ -56,10 +60,9 @@ function EmailComfirmation() {
 
 	const handleGenerateNewToken = async () => {
 		try {
-			await axios.post(
-				"http://localhost:8090/generate-new-email-confirmation-token",
-				{ token: params.token }
-			);
+			await axios.post("http://localhost:8090/users/generate-new-token", {
+				token: params.token,
+			});
 
 			setMessage(
 				"New email confirmation token generated. Please check your email again."
