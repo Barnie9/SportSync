@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // CSS
 import ProfileCSS from "./Profile.module.css";
@@ -14,6 +14,11 @@ function Profile({ onChangeUsername }: Props) {
 	const [username, setUsername] = useState(
 		localStorage.getItem("username") || ""
 	);
+
+	useEffect(() => {
+		setUsername(localStorage.getItem("username") || "");
+		onChangeUsername(username);
+	}, []);
 
 	return (
 		<>
