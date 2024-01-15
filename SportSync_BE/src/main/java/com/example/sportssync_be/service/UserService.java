@@ -66,4 +66,24 @@ public class UserService {
             userRepository.save(existingUser.get());
         }
     }
+
+    public void updateUser1(String username, UserDto userDto) {
+        System.out.println("userdto"+userDto);
+        System.out.println("username"+username);
+        Optional<User> existingUser = Optional.ofNullable(userRepository.findByUsername(username));
+        System.out.println("test"+existingUser);
+        if(existingUser.isPresent()) {
+            existingUser.get().setUsername(userDto.username());
+            existingUser.get().setEmailAddress(userDto.emailAddress());
+            existingUser.get().setPassword(userDto.password());
+            existingUser.get().setFirstName(userDto.firstName());
+            existingUser.get().setLastName(userDto.lastName());
+            existingUser.get().setBirthDate(userDto.birthDate());
+            existingUser.get().setPhoneNumber(userDto.phoneNumber());
+            existingUser.get().setFoot(userDto.foot());
+            existingUser.get().setPosition(userDto.position());
+            existingUser.get().setProfilePicturePath(userDto.profilePicturePath());
+            userRepository.save(existingUser.get());
+        }
+    }
 }

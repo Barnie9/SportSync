@@ -36,7 +36,11 @@ function EventMembersPage({ onChangeUsername }: Props) {
 
 	const computeAge = (user: User | undefined) => {
 		if (!user) {
-			return 0;
+			return "Unknown";
+		}
+
+		if (!user.birthDate) {
+			return "Unknown";
 		}
 
 		const today = new Date();

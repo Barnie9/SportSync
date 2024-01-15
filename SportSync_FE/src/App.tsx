@@ -4,7 +4,7 @@ import {
 	Route,
 	Navigate,
 } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 // Pages
 import Register from "./pages/Register/Register";
