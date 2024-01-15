@@ -5,18 +5,18 @@
     justify-content: flex-start;
     align-items: center;
 
-    width: 400px;
-    height: 300px;
-
-    margin: 0 10px 30px 10px;
+    width: 300px;
+    height: 250px;
 
     border-radius: 20px;
+
+    cursor: pointer;
 }
 
 .image {
     position: absolute;
 
-    width: 400px;
+    width: 300px;
     height: 120px;
 
     object-fit: cover;
@@ -32,8 +32,8 @@
     justify-content: flex-start;
     align-items: center;
 
-    width: 400px;
-    height: 200px;
+    width: 300px;
+    height: 150px;
 
     margin-top: 100px;
 
@@ -49,7 +49,7 @@
     align-items: center;
 
     width: 100%;
-    height: 40px;
+    height: 30px;
 
     font-size: 20px;
 
@@ -57,30 +57,12 @@
 }
 
 .description {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-
-    width: 90%;
-    height: 100px;
-
-    margin-top: 10px;
-
-    font-size: 14px;
-
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
     overflow: hidden;
 
-    color: #ffffff;
-}
-
-.container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-
-    width: 95%;
+    width: 90%;
     height: 40px;
 
     margin-top: 10px;
@@ -90,14 +72,53 @@
     color: #ffffff;
 }
 
-.text {
+.container {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
     align-items: center;
 
-    width: auto;
-    height: 100%;
+    width: 290px;
+    height: 50px;
+
+    margin-top: 5px;
+
+    font-size: 14px;
+
+    color: #ffffff;
+}
+
+.text_left {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    width: 190px;
+    height: 25px;
+
+    margin-top: 5px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    font-size: 15px;
+
+    color: #ffffff;
+}
+
+.text_right {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    width: 80px;
+    height: 25px;
+
+    margin-top: 5px;
 
     font-size: 15px;
 

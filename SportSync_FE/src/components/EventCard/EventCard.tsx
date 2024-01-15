@@ -3,7 +3,7 @@
 import EventCardCSS from "./EventCard.module.css";
 
 // Icons
-import { Place, Sell, InsertInvitation } from "@mui/icons-material"
+import { Place, Group, Sell, InsertInvitation } from "@mui/icons-material"
 
 // Images
 import Field from "../../images/field.png";
@@ -15,34 +15,39 @@ interface Props {
     event: Event;
 }
 
-function EventCard() {
+function EventCard({ event }: Props) {
 	return (
 		<div className={EventCardCSS.card}>
 			<img src={Field} alt="Field" className={EventCardCSS.image} />
             
             <div className={EventCardCSS.content}>
                 <div className={EventCardCSS.title}>
-                    Barcelona - Real Madrid
+                    {event.title}
                 </div>
 
                 <div className={EventCardCSS.description}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris scelerisque, at rutrum nulla dictum.
+                    {event.description}
                 </div>
 
                 <div className={EventCardCSS.container}>
-                    <div className={EventCardCSS.text}>
+                    <div className={EventCardCSS.text_left}>
                         <Place />
-                        Barcelona, Spain
+                        {event.location}
                     </div>
 
-                    <div className={EventCardCSS.text}>
-                        <Sell />
-                        100
+                    <div className={EventCardCSS.text_right}>
+                        <Group />
+                        {event.maxPlayers}
                     </div>
 
-                    <div className={EventCardCSS.text}>
+                    <div className={EventCardCSS.text_left}>
                         <InsertInvitation />
-                        20.10.2024, 19:00
+                        {event.startDate + ", " + event.startTime.substring(0, event.startTime.lastIndexOf(":"))}
+                    </div>
+
+                    <div className={EventCardCSS.text_right}>
+                        <Sell />
+                        {event.price + "€"}
                     </div>
                 </div>
             </div>

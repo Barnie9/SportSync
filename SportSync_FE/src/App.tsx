@@ -13,6 +13,8 @@ import EmailConfirmation from "./pages/EmailConfirmation/EmailConfirmation";
 import Home from "./pages/Home/Home";
 import Events from "./pages/Events/Events";
 import Profile from "./pages/Profile/Profile";
+import MyEvents from "./pages/MyEvents/MyEvents";
+import EventPage from "./pages/EventPage/EventPage";
 
 interface Props {
 	setUsername: (username: string) => void;
@@ -22,6 +24,15 @@ function PrivateRoute({ setUsername }: Props) {
 	return (
 		<Router>
 			<Routes>
+				<Route path="/login" element={<Navigate to="/" />} />
+
+				<Route path="/register" element={<Navigate to="/" />} />
+
+				<Route
+					path="/confirm-email/:token"
+					element={<Navigate to="/" />}
+				/>
+
 				<Route
 					path="/"
 					element={
@@ -38,15 +49,6 @@ function PrivateRoute({ setUsername }: Props) {
 							onChangeUsername={(value) => setUsername(value)}
 						/>
 					}
-				/>
-
-				<Route path="/login" element={<Navigate to="/" />} />
-
-				<Route path="/register" element={<Navigate to="/" />} />
-
-				<Route
-					path="/confirm-email/:token"
-					element={<Navigate to="/" />}
 				/>
 
 				<Route
@@ -58,6 +60,10 @@ function PrivateRoute({ setUsername }: Props) {
 					}
 				/>
 
+				<Route path="/my-events" element={<MyEvents onChangeUsername={(value) => setUsername(value)} />} />
+
+				<Route path="/event/:id" element={<EventPage onChangeUsername={(value) => setUsername(value)} />} />
+
 				<Route path="*" element={<Navigate to="/" />} />
 			</Routes>
 		</Router>
@@ -68,24 +74,6 @@ function PublicRoute({ setUsername }: Props) {
 	return (
 		<Router>
 			<Routes>
-				<Route
-					path="/"
-					element={
-						<Home
-							onChangeUsername={(value) => setUsername(value)}
-						/>
-					}
-				/>
-
-				<Route
-					path="/events"
-					element={
-						<Events
-							onChangeUsername={(value) => setUsername(value)}
-						/>
-					}
-				/>
-
 				<Route
 					path="/login"
 					element={
@@ -113,7 +101,29 @@ function PublicRoute({ setUsername }: Props) {
 					}
 				/>
 
+				<Route
+					path="/"
+					element={
+						<Home
+							onChangeUsername={(value) => setUsername(value)}
+						/>
+					}
+				/>
+
+				<Route
+					path="/events"
+					element={
+						<Events
+							onChangeUsername={(value) => setUsername(value)}
+						/>
+					}
+				/>
+
 				<Route path="/profile" element={<Navigate to="/" />} />
+
+				<Route path="/my-events" element={<Navigate to="/" />} />
+
+				<Route path="/event/:id" element={<EventPage onChangeUsername={(value) => setUsername(value)} />} />
 
 				<Route path="*" element={<Navigate to="/" />} />
 			</Routes>

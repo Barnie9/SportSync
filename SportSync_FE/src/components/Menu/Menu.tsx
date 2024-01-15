@@ -21,6 +21,12 @@ function Menu({ selectedPage, onChangeUsername }: Props) {
 	const [username, setUsername] = useState("");
 
 	useEffect(() => {
+		onChangeUsername(localStorage.getItem("username") || "");
+		setUsername(localStorage.getItem("username") || "");
+	}, []);
+
+	useEffect(() => {
+		onChangeUsername(localStorage.getItem("username") || "");
 		setUsername(localStorage.getItem("username") || "");
 	}, [username]);
 
