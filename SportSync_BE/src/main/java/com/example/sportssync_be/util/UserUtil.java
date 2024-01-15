@@ -39,7 +39,6 @@ public class UserUtil {
         return password.equals(confirmPassword);
     }
 
-
     private boolean isNameValid(String name) {
         return name != null && name.matches("^[a-zA-Z]{3,}$");
     }
@@ -47,10 +46,10 @@ public class UserUtil {
         return phoneNumber.matches("^\\d{10}$");
     }
     private boolean isFootValid(String foot) {
-        return foot != null && (foot.equals("left") || foot.equals("right") || foot.equals("both"));
+        return foot != null && (foot.equals("Left") || foot.equals("Right") || foot.equals("Both"));
     }
     private boolean isPositionValid(String position) {
-        return position != null && (position.equals("goalkeeper") || position.equals("midfielder") || position.equals("striker") || position.equals("defender"));
+        return position != null && (position.equals("Goalkeeper") || position.equals("Midfielder") || position.equals("Striker") || position.equals("Defender"));
     }
     public boolean isUsernameUniqueUpdate(String username, Long currentUserId) {
         UserDto existingUser = userService.getUserByUsername(username);

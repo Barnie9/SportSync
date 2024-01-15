@@ -18,8 +18,9 @@
 }
 
 .container{
-    width: 100%;
+    width: 80%;
     height: 100vh;
+    margin-left: 20%;
     background: #1d203f;
     padding-left: 50px;
     display: flex;
@@ -53,7 +54,6 @@
 
 .recentEvents{
     align-items: center;
-    margin-top: 100px;
 }
 
 .rE_leftArrow{

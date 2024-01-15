@@ -8,6 +8,7 @@ import ProfileCSS from "./Profile.module.css";
 // Components
 import Menu from "../../components/Menu/Menu";
 import Stats from "../../components/Stats/Stats";
+import User from "../../interfaces/User";
 
 interface Props {
 	onChangeUsername: (username: string) => void;
@@ -23,6 +24,8 @@ function Profile({ onChangeUsername }: Props) {
 		onChangeUsername(username);
 	}, []);
 
+	const [user, setUser] = useState<User>();
+
 	const [email, setEmail] = useState("");
 	const [firstName, setFirstName] = useState("");
 	const [password, setPassword] = useState("");
@@ -31,12 +34,20 @@ function Profile({ onChangeUsername }: Props) {
 	const [position, setPosition] = useState("");
 	const [phoneNumber, setPhoneNumber] = useState("");
 	const [foot, setFoot] = useState("");
-	const [errorMessages, setErrorMessages] = useState(["ok", "ok", "ok", "ok", "ok", "ok","ok"]);
+	const [errorMessages, setErrorMessages] = useState([
+		"ok",
+		"ok",
+		"ok",
+		"ok",
+		"ok",
+		"ok",
+		"ok",
+	]);
 	const [usernameError, setUsernameError] = useState("");
 	const [passwordError, setPasswordError] = useState("");
 	const [footError, setFootError] = useState("");
-	const[firstNameError, setFirstNameError] = useState("");
-	const[lastNameError, setLastNameError] = useState("");
+	const [firstNameError, setFirstNameError] = useState("");
+	const [lastNameError, setLastNameError] = useState("");
 	const [phoneNumberError, setPhoneNumberError] = useState("");
 	const [positionError, setPositionError] = useState("");
 
@@ -54,34 +65,38 @@ function Profile({ onChangeUsername }: Props) {
 		} else if (errorMessages[1] === "ok") {
 			setPasswordError("");
 		}
-		if(errorMessages[2] === "invalid"){
-			setFootError("* Need to choose a foot");}
-		else if(errorMessages[2] === "ok"){
-				setFootError("");
+		if (errorMessages[2] === "invalid") {
+			setFootError("* Need to choose a foot");
+		} else if (errorMessages[2] === "ok") {
+			setFootError("");
 		}
-		if(errorMessages[3] === "invalid"){
-			setFirstNameError("* Invalid first name, need to have minimum 3 characters!");}
-		else if(errorMessages[3] === "ok"){
-				setFirstNameError("");
+		if (errorMessages[3] === "invalid") {
+			setFirstNameError(
+				"* Invalid first name, need to have minimum 3 characters!"
+			);
+		} else if (errorMessages[3] === "ok") {
+			setFirstNameError("");
 		}
-		if(errorMessages[4] === "invalid"){
-			setLastNameError("* Invalid last name, need to have minimum 3 characters!");}
-		else if(errorMessages[4] === "ok"){
-				setLastNameError("");
-		}
-		
-		if(errorMessages[5] === "invalid"){
-			setPhoneNumberError("* Invalid phone number, need to contain just numbers!");}
-		else if(errorMessages[5] === "ok"){
-				setPhoneNumberError("");
-		}
-		if(errorMessages[6] === "invalid"){
-			setPositionError("* Need to choose a position");}
-		else if(errorMessages[6] === "ok"){
-				setPositionError("");
+		if (errorMessages[4] === "invalid") {
+			setLastNameError(
+				"* Invalid last name, need to have minimum 3 characters!"
+			);
+		} else if (errorMessages[4] === "ok") {
+			setLastNameError("");
 		}
 
-
+		if (errorMessages[5] === "invalid") {
+			setPhoneNumberError(
+				"* Invalid phone number, need to contain just numbers!"
+			);
+		} else if (errorMessages[5] === "ok") {
+			setPhoneNumberError("");
+		}
+		if (errorMessages[6] === "invalid") {
+			setPositionError("* Need to choose a position");
+		} else if (errorMessages[6] === "ok") {
+			setPositionError("");
+		}
 	};
 
 	useEffect(() => {
@@ -92,11 +107,12 @@ function Profile({ onChangeUsername }: Props) {
 		waitForSetErrors();
 	}, [errorMessages]);
 
-
 	useEffect(() => {
 		const fetchUserData = async () => {
 			try {
-				const response = await axios.get("http://localhost:8090/users/" + username);
+				const response = await axios.get(
+					"http://localhost:8090/users/" + username
+				);
 				const userData = response.data;
 
 				setEmail(userData.emailAddress || "");
@@ -107,26 +123,25 @@ function Profile({ onChangeUsername }: Props) {
 				setPosition(userData.position || "");
 				setPhoneNumber(userData.phoneNumber || "");
 				setFoot(userData.foot || "");
+
+				setUser(userData);
 			} catch (error) {
 				console.error("Error fetching user data:", error);
 			}
 		};
 		fetchUserData();
-		
 	}, [username]);
 
-	const handleRegister = async () => {
-		try {
-			if (
-				username === "" ||
-				email === "" ||
-				password === ""
-			) {
-				alert("Please fill out all fields!");
-				return;
-			}
+	useEffect(() => {}, [errorMessages]);
 
-			await axios.post("http://localhost:8090/users/update", {
+	const handleRegister = async () => {
+		if (username === "" || email === "" || password === "") {
+			alert("Please fill out all fields!");
+			return;
+		}
+
+		await axios
+			.post("http://localhost:8090/users/update", {
 				username: username,
 				emailAddress: email,
 				password: password,
@@ -136,18 +151,23 @@ function Profile({ onChangeUsername }: Props) {
 				phoneNumber: phoneNumber,
 				foot: foot,
 				position: position,
-
+			})
+			.then((response) => {
+				alert("Profile updated successfully!");
+				setErrorMessages(["ok", "ok", "ok", "ok", "ok", "ok", "ok"]);
+			})
+			.catch((error) => {
+				setErrorMessages(error.response.data.split(","));
 			});
-
-		} catch (error: any) {
-			setErrorMessages(error.response.data.split(","));
-		}
 	};
 
 	return (
 		<>
 			<div className={ProfileCSS.page}>
-				<Menu selectedPage="Profile" onChangeUsername={onChangeUsername} />
+				<Menu
+					selectedPage="Profile"
+					onChangeUsername={onChangeUsername}
+				/>
 
 				<div className={ProfileCSS.container}>
 					<div className={ProfileCSS.left_side}>
@@ -159,7 +179,11 @@ function Profile({ onChangeUsername }: Props) {
 										First Name:
 									</div>
 									<input
-										className={firstNameError === "" ? ProfileCSS.input : ProfileCSS.input_error}
+										className={
+											firstNameError === ""
+												? ProfileCSS.input
+												: ProfileCSS.input_error
+										}
 										placeholder="..."
 										value={firstName}
 										onChange={(event) => {
@@ -179,7 +203,8 @@ function Profile({ onChangeUsername }: Props) {
 										onChange={(event) => {
 											setEmail(event.target.value);
 										}}
-										readOnly />
+										readOnly
+									/>
 								</div>
 
 								<div className={ProfileCSS.item}>
@@ -187,7 +212,8 @@ function Profile({ onChangeUsername }: Props) {
 										Password:
 									</div>
 									<input
-										className={passwordError === ""
+										className={
+											passwordError === ""
 												? ProfileCSS.input
 												: ProfileCSS.input_error
 										}
@@ -213,21 +239,19 @@ function Profile({ onChangeUsername }: Props) {
 										}}
 									/>
 								</div>
-
 							</div>
 
-
-
-
 							<div className={ProfileCSS.profile_right}>
-
-
 								<div className={ProfileCSS.item}>
 									<div className={ProfileCSS.label}>
 										Last Name:
 									</div>
 									<input
-										className={lastNameError === "" ? ProfileCSS.input : ProfileCSS.input_error}
+										className={
+											lastNameError === ""
+												? ProfileCSS.input
+												: ProfileCSS.input_error
+										}
 										placeholder="..."
 										value={lastName}
 										onChange={(event) => {
@@ -241,17 +265,29 @@ function Profile({ onChangeUsername }: Props) {
 										Position:
 									</div>
 									<select
-										className={positionError === "" ? ProfileCSS.input : ProfileCSS.input_error}
+										className={
+											positionError === ""
+												? ProfileCSS.input
+												: ProfileCSS.input_error
+										}
 										value={position}
 										onChange={(event) => {
 											setPosition(event.target.value);
 										}}
 									>
-										<option value="">Select Position</option>
-										<option value="goalkeeper">Goalkeeper</option>
-										<option value="midfielder">Midfielder</option>
-										<option value="striker">Striker</option>
-										<option value="defender">Defender</option>
+										<option value="">
+											Select Position
+										</option>
+										<option value="Goalkeeper">
+											Goalkeeper
+										</option>
+										<option value="Midfielder">
+											Midfielder
+										</option>
+										<option value="Striker">Striker</option>
+										<option value="Defender">
+											Defender
+										</option>
 									</select>
 								</div>
 
@@ -260,7 +296,11 @@ function Profile({ onChangeUsername }: Props) {
 										Phone Number:
 									</div>
 									<input
-										className={phoneNumberError === "" ? ProfileCSS.input : ProfileCSS.input_error}
+										className={
+											phoneNumberError === ""
+												? ProfileCSS.input
+												: ProfileCSS.input_error
+										}
 										placeholder="..."
 										value={phoneNumber}
 										onChange={(event) => {
@@ -273,52 +313,57 @@ function Profile({ onChangeUsername }: Props) {
 										Foot:
 									</div>
 									<select
-										className={footError === "" ? ProfileCSS.input : ProfileCSS.input_error}
+										className={
+											footError === ""
+												? ProfileCSS.input
+												: ProfileCSS.input_error
+										}
 										value={foot}
 										onChange={(event) => {
 											setFoot(event.target.value);
 										}}
 									>
 										<option value="">Select Foot</option>
-										<option value="left">Left</option>
-										<option value="right">Right</option>
-										<option value="both">Both</option>
+										<option value="Left">Left</option>
+										<option value="Right">Right</option>
+										<option value="Both">Both</option>
 									</select>
 								</div>
 							</div>
-							
-							
 						</div>
 						<div className={ProfileCSS.text_error}>
-								{passwordError}
-							</div>
-							<div className={ProfileCSS.text_error}>
-								{firstNameError}
-							</div>
-							<div className={ProfileCSS.text_error}>
-								{lastNameError}
-							</div>
-							<div className={ProfileCSS.text_error}>
-								{footError}
-							</div>
-							<div className={ProfileCSS.text_error}>
-								{positionError}
-							</div>
-							<div className={ProfileCSS.text_error}>
-								{phoneNumberError}
-							</div>
-							<div className={ProfileCSS.text_error}>
-								{usernameError}
-							</div>
-						<button onClick={handleRegister} className={ProfileCSS.button}>Save Changes</button>
+							{passwordError}
+						</div>
+						<div className={ProfileCSS.text_error}>
+							{firstNameError}
+						</div>
+						<div className={ProfileCSS.text_error}>
+							{lastNameError}
+						</div>
+						<div className={ProfileCSS.text_error}>{footError}</div>
+						<div className={ProfileCSS.text_error}>
+							{positionError}
+						</div>
+						<div className={ProfileCSS.text_error}>
+							{phoneNumberError}
+						</div>
+						<div className={ProfileCSS.text_error}>
+							{usernameError}
+						</div>
+						<button
+							onClick={handleRegister}
+							className={ProfileCSS.button}
+						>
+							Save Changes
+						</button>
 					</div>
 
 					<div className={ProfileCSS.right_side}>
-						<p className={ProfileCSS.statistics_title}>Statistics</p>
-						<Stats username={username}/>
-
+						<p className={ProfileCSS.statistics_title}>
+							Statistics
+						</p>
+						<Stats rating={user?.rating} />
 					</div>
-
 				</div>
 			</div>
 		</>
