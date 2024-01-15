@@ -1,28 +1,31 @@
 package com.example.sportssync_be.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Collection;
+import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Data
-public class User{
+@NoArgsConstructor
+@AllArgsConstructor
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Relations
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_rating", referencedColumnName = "id")
+    private Rating rating;
+
+    // Credentials
     @Column
     private String username;
-
-    @Column
-    private String firstName;
-
-    @Column
-    private String lastName;
 
     @Column
     private String emailAddress;
@@ -30,26 +33,35 @@ public class User{
     @Column
     private String password;
 
+    // Details
     @Column
-    private String profilePicture;
+    private String firstName;
 
     @Column
-    private String gender;
+    private String lastName;
 
+    @Column
+    private LocalDate birthDate;
+
+    @Column
+    private String phoneNumber;
+
+    @Column
+    private String foot;
+
+    @Column
+    private String position;
+
+    @Column
+    private String profilePicturePath;
+
+    // Activation
     @Column
     private String token;
 
     @Column
-    private boolean isConfirmed;
+    private Boolean isConfirmed;
 
     @Column
     private Date createdAt;
-
-
-
-    @OneToMany(mappedBy = "organizer")
-    private List<Event> eventList;
-
-    @OneToMany(mappedBy = "user")
-    private List<Entry> entryList;
 }

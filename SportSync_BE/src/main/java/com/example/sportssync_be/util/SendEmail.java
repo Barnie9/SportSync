@@ -1,4 +1,4 @@
-package com.example.sportssync_be.utils;
+package com.example.sportssync_be.util;
 
 import java.util.Properties;
 
@@ -12,8 +12,8 @@ import javax.mail.internet.MimeMessage;
 
 public class SendEmail {
 
-    private static final String senderEmailAddress = "bran.alexandru.2002@gmail.com";
-    private static final String password = "vnxhixksalmeqlzt";
+    private static final String senderEmailAddress = "sport.sync.2024@gmail.com";
+    private static final String password = "ciyqewwpnzdzdjce";
     private static final String host = "smtp.gmail.com";
     private static final String port = "465";
 

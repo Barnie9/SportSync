@@ -1,7 +1,9 @@
 package com.example.sportssync_be.controller;
 
-import com.example.sportssync_be.dto.UserDTO;
+import com.example.sportssync_be.dto.UserDto;
 import com.example.sportssync_be.service.UserService;
+import com.example.sportssync_be.util.UserUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,37 +13,27 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 public class LoginController {
 
     private final UserService userService;
 
-    @Autowired
-    public LoginController(UserService userService) {
-        this.userService = userService;
-    }
-
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@RequestBody Map<String, String> body) {
-        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z]{2,}$";
-        if (!body.get("emailAddress").matches(emailRegex)) {
-            return ResponseEntity.badRequest().body("* Invalid email address");
-        } else {
-            UserDTO foundUserByEmailAddress = userService.getUserByEmailAddress(body.get("emailAddress"));
-            if (foundUserByEmailAddress == null) {
-                return ResponseEntity.badRequest().body("* An account with this email address does not exist");
-            }
+        if (userService.getUserByUsername(body.get("username")) == null) {
+            return ResponseEntity.badRequest().body("* An account with this username does not exist");
         }
 
-        UserDTO userDTO = userService.getUserByEmailAddressAndPassword(body.get("emailAddress"), body.get("password"));
+        UserDto userDto = userService.getUserByUsernameAndPassword(body.get("username"), body.get("password"));
 
-        if (userDTO == null) {
+        if (userDto == null) {
             return ResponseEntity.badRequest().body("* Wrong password");
         }
 
-        if (!userDTO.isConfirmed()) {
+        if (!userDto.isConfirmed()) {
             return ResponseEntity.badRequest().body("* Email address not confirmed");
         }
 
-        return ResponseEntity.ok().body(userDTO.getEmailAddress());
+        return ResponseEntity.ok().body(userDto.username());
     }
 }

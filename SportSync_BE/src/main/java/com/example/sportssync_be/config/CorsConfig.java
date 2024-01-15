@@ -15,11 +15,10 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         // Allow requests from the specified origin
-        config.addAllowedOrigin("http://localhost:3000");
+        config.addAllowedOriginPattern("*"); // Default allowed origin
 
         // Allow all HTTP methods (GET, POST, etc.)
         config.addAllowedMethod("*");
-
         // Allow all headers
         config.addAllowedHeader("*");
 

@@ -1,10 +1,6 @@
-import { useState } from 'react';
-import axios from 'axios';
+import { useState } from "react";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-
-// Material UI
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 
 // CSS
 import LoginCSS from "./Login.module.css";
@@ -14,101 +10,96 @@ import Logo from "../../images/logo.png";
 import Footballer from "../../images/footballer.png";
 
 function Login() {
-    const navigate = useNavigate();
+	const navigate = useNavigate();
 
-    const [emailAddress, setEmailAddress] = useState('');
-    const [password, setPassword] = useState('');
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
 
-    const [errorMessage, setErrorMessage] = useState('');
+	const [errorMessage, setErrorMessage] = useState("");
 
-    const handleLogin = async () => {
-        try {
-            if (emailAddress === '' || password === '') {
-                alert('Please fill out all fields');
-                return;
-            }
+	const handleLogin = async () => {
+		try {
+			if (username === "" || password === "") {
+				alert("Please fill out all fields");
+				return;
+			}
 
-            const response = await axios.post('http://localhost:8090/login', { emailAddress: emailAddress, password: password })
+			const response = await axios.post("http://86.125.232.27:8090/login", {
+				username: username,
+				password: password,
+			});
 
-            localStorage.setItem('emailAddress', response.data);
+			localStorage.setItem("username", response.data);
 
-            navigate('/')
-        } catch (error: any) {
-            setErrorMessage(error.response.data);
-        }
-    };
+			navigate("/");
+		} catch (error: any) {
+			setErrorMessage(error.response.data);
+		}
+	};
 
-    return (
-        <Box className={LoginCSS.background}>
-            <Grid container xs={10} md={8} className={LoginCSS.container}>
-                <Grid container xs={12} md={6} className={LoginCSS.left_column}>
+	return (
+		<div className={LoginCSS.page}>
+			<div className={LoginCSS.left_container}>
+				<button
+					className={LoginCSS.home_button}
+					onClick={() => navigate("/home")}
+				>
+					<img
+						src={Logo}
+						alt="Logo"
+						className={LoginCSS.logo}
+					></img>
+					<div className={LoginCSS.app_title}>SportSync</div>
+				</button>
 
-                    <Grid item xs={12} md={12} className={LoginCSS.item}>
-                        <button className={LoginCSS.home_button} onClick={() => navigate("/home")}>
-                            <img
-                                src={Logo}
-                                alt="Logo"
-                                className={LoginCSS.logo}
-                            ></img>
-                            <p className={LoginCSS.app_title}>SportSync</p>
-                        </button>
-                    </Grid>
+				<img
+					src={Footballer}
+					alt="footballer"
+					className={LoginCSS.image}
+				></img>
+			</div>
 
-                    <Grid item xs={12} md={12} className={LoginCSS.item}>
-                        <img src={Footballer}
-                            alt="footballer"
-                            className={LoginCSS.image}
-                        ></img>
-                    </Grid>
-                </Grid>
-            <Grid container xs={12} md={6} className={LoginCSS.right_column}>
-                <Grid item xs={12} md={12} className={LoginCSS.item}>
-                    <h1 className={LoginCSS.title}> Login</h1>
-                </Grid>
+			<div className={LoginCSS.right_container}>
+				<div className={LoginCSS.title}>Login</div>
 
-                <Grid item xs={12} md={12} className={LoginCSS.item}>
-                    <input
-                        type="text"
-                        placeholder="Email"
-                        className={LoginCSS.input}
-                        value={emailAddress}
-                        onChange={(event) =>
-                            setEmailAddress(event.target.value)
-                        }
-                    ></input>
-                </Grid>
+				<input
+					type="text"
+					placeholder="Username"
+					className={LoginCSS.input}
+					value={username}
+					onChange={(event) =>
+						setUsername(event.target.value)
+					}
+				></input>
 
-                <Grid item xs={12} md={12} className={LoginCSS.item}>
-                    <input
-                        type="password"
-                        placeholder='Password'
-                        className={LoginCSS.input}
-                        value={password}
-                        onChange={(event) =>
-                            setPassword(event.target.value)
-                        }
-                    ></input>
-                </Grid>
-                <Grid item xs={12} md={12} className={LoginCSS.item}>
-                    <p className={LoginCSS.text_error}> {errorMessage} </p>
-                </Grid>
-                <Grid item xs={12} md={12} className={LoginCSS.item}>
-                    <button className={LoginCSS.button} onClick={handleLogin}>
-                        Login
-                    </button>
-                </Grid>
-                <Grid item xs={12} md={12} className={LoginCSS.item}>
-                    <p className={LoginCSS.text}>
-                        You don't have an account?{" "}
-                        <Link to="/Register" className={LoginCSS.link}>
-                            Register here
-                        </Link>
-                    </p>
-                </Grid>
-            </Grid>
-        </Grid>
-        </Box >
-    );
-};
+				<input
+					type="password"
+					placeholder="Password"
+					className={LoginCSS.input}
+					value={password}
+					onChange={(event) =>
+						setPassword(event.target.value)
+					}
+				></input>
+
+				<div className={LoginCSS.text_error}>{errorMessage}</div>
+
+				<button
+					className={LoginCSS.login_button}
+					onClick={handleLogin}
+				>
+					Login
+				</button>
+
+				<div className={LoginCSS.text}>
+					You don't have an account?{" "}
+					<Link to="/register" className={LoginCSS.link}>
+						Register here
+					</Link>
+				</div>
+			</div>
+		</div>
+	);
+}
 
 export default Login;

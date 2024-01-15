@@ -11,6 +11,7 @@ import Login from "./pages/Login/Login";
 import EmailConfirmation from "./pages/EmailConfirmation/EmailConfirmation";
 import Home from "./pages/Home/Home";
 import Events from "./pages/Events/Events";
+import Profile from "./pages/Profile/Profile";
 
 function App() {
 	return (
@@ -21,14 +22,36 @@ function App() {
 
 					<Route path="/events" element={<Events />} />
 
-					<Route path="/login" element={<Login />} />
+					{!localStorage.getItem("username") ? (
+						<Route path="/login" element={<Login />} />
+					) : (
+						<Route path="/login" element={<Navigate to="/" />} />
+					)}
 
-					<Route path="/register" element={<Register />} />
+					{!localStorage.getItem("username") ? (
+						<Route path="/register" element={<Register />} />
+					) : (
+						<Route path="/register" element={<Navigate to="/" />} />
+					)}
 
-					<Route
-						path="/confirm-email/:token"
-						element={<EmailConfirmation />}
-					/>
+					{!localStorage.getItem("username") ? (
+						<Route
+							path="/confirm-email/:token"
+							element={<EmailConfirmation />}
+						/>
+					) : (
+						<Route
+							path="/confirm-email/:token"
+							element={<Navigate to="/" />}
+						/>
+					)}
+
+					{localStorage.getItem("username") ? (
+						<Route path="/profile" element={<Profile />} />
+					) : (
+						
+						<Route path="/profile" element={<Navigate to="/" />} />
+					)}
 
 					<Route path="*" element={<Navigate to="/" />} />
 				</Routes>

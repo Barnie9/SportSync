@@ -1,25 +1,13 @@
-.background {
-    /* display */
-    flex-direction: column;
-
-    /* background */
-    background-color: #FFFFFF;
-
-    /* dimension */
-    width: 100%;
-    height: 120px;
-
-    /* border */
-    /* spacing */
-    /* text */
-}
-
 .up {
     /* display */
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
 
     /* background */
+    background-color: #ffffff;
+
     /* dimension */
     width: 100%;
     height: 60px;
@@ -38,20 +26,23 @@
 
     /* background */
     /* dimension */
-    width: 100%;
+    width: 40%;
     height: 60px;
 
     /* border */
     /* spacing */
     /* text */
 
+    @media (max-width: 768px) {
+        width: 50%;
+    }
 }
 
 .logo {
     /* display */
     /* background */
     /* dimension */
-    width: auto;
+    width: 50px;
     height: 50px;
 
     /* border */
@@ -72,7 +63,11 @@
     /* text */
     font-size: 30px;
     font-weight: bold;
-    color: #000000;
+    color: #223E61;
+
+    @media (max-width: 768px) {
+        display: none;
+    }
 }
 
 .right {
@@ -84,12 +79,199 @@
 
     /* background */
     /* dimension */
-    width: 100%;
+    width: 40%;
     height: 60px;
 
     /* border */
     /* spacing */
     /* text */
+
+    @media (max-width: 768px) {
+        width: 50%;
+    }
+}
+
+.account {
+    /* display */
+    position: relative;
+    display: block;
+
+    /* background */
+    /* dimension */
+    /* border */
+    /* spacing */
+    /* text */
+}
+
+.account_button {
+    /* display */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* background */
+    background-color: transparent;
+
+    /* dimension */
+    width: auto;
+    height: 60px;
+
+    /* border */
+    border-style: none;
+
+    /* spacing */
+    margin: 0px 10px;
+
+    /* text */
+    color: #FFFFFF;
+
+    /* cursor */
+    cursor: pointer;
+}
+
+.account_picture {
+    /* display */
+    /* background */
+    /* dimension */
+    width: 50px;
+    height: 50px;
+
+    /* border */
+    /* spacing */
+    margin: 0px;
+
+    /* text */
+}
+
+.account_name {
+    /* display */
+    /* background */
+    /* dimension */
+    /* border */
+    /* spacing */
+    margin: 5px 10px;
+
+    /* text */
+    font-size: 20px;
+    font-weight: bold;
+    color: #223E61;
+    text-align: center;
+}
+
+.arrow {
+    /* display */
+    /* background */
+    /* dimension */
+    /* border */
+    /* spacing */
+    /* text */
+    color: #223E61;
+}
+
+.dropdown {
+    /* display */
+    z-index: 1;
+    display: block;
+    position: absolute;
+
+    /* background */
+    background-color: #ffffff;
+
+    /* dimension */
+    width: 100%;
+    
+    /* border */
+    border: #223E61 solid 2px;
+    border-radius: 0px 0px 10px 10px;
+    border-top: none;
+
+    /* spacing */
+    /* text */
+}
+
+.dropdown_item {
+    /* display */
+    display: block;
+
+    /* background */
+    /* dimension */
+    width: 100%;
+
+    /* border */
+    /* spacing */
+    padding: 12px 0px;
+
+    /* text */
+    color: #000000;
+    text-align: center;
+    text-decoration: none;
+}
+
+.dropdown_item:hover {
+    /* display */
+    /* background */
+    background-color: #f1f1f1;
+
+    /* dimension */
+    /* border */
+    border-radius: 10px;
+
+    /* spacing */
+    /* text */
+    /* cursor */
+    cursor: pointer;
+}
+
+.login_button {
+    /* display */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* background */
+    background-color: transparent;
+
+    /* dimension */
+    width: auto;
+    height: 60px;
+
+    /* border */
+    border-style: none;
+
+    /* spacing */
+    padding: 0px 20px;
+
+    /* text */
+    color: #223E61;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.login_button:hover {
+    /* display */
+    /* background */
+    background-color: #f1f1f1;
+
+    /* dimension */
+    /* border */
+    /* spacing */
+    /* text */
+    color: #5FC4EE;
+
+    /* cursor */
+    cursor: pointer;
+}
+
+.icon {
+    /* display */
+    /* background */
+    /* dimension */
+    /* border */
+    /* spacing */
+    margin: 0px 0px 0px 10px;
+
+    /* text */
+    color: inherit;
 }
 
 .down {
@@ -100,7 +282,7 @@
     align-items: center;
 
     /* background */
-    background-color: #141f34;
+    background-color: #223E61;
 
     /* dimension */
     width: 100%;
@@ -114,7 +296,7 @@
 .button {
     /* display */
     /* background */
-    background-color: #141f34;
+    background-color: transparent;
 
     /* dimension */
     width: auto;

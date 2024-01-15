@@ -1,14 +1,16 @@
+
 // CSS
 import EventsCSS from "./Events.module.css";
 
 // Components
-import NavBar from "../../components/NavBar/NavBar";
+import Menu from "../../components/Menu/Menu";
 
 function Events() {
 	return (
 		<>
-			<NavBar selected="Events" />
-            <h1>Events</h1>
+			<div className={EventsCSS.page}>
+				<Menu selectedPage="Events" />
+			</div>
 		</>
 	);
 }
