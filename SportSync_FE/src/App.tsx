@@ -49,6 +49,7 @@ function App() {
 					{localStorage.getItem("username") ? (
 						<Route path="/profile" element={<Profile />} />
 					) : (
+						
 						<Route path="/profile" element={<Navigate to="/" />} />
 					)}
 

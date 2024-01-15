@@ -1,0 +1,37 @@
+.statistics_container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.stats_container{
+    display: flex;
+    justify-content: space-between;
+    margin:5px;
+    border-radius: 15px;
+    width: 50%;
+    border:1px solid black;
+    padding:5px;
+    color: white;
+    font-size: large;
+}
+.stats_container:nth-child(1){
+    background-color: lightcoral;
+}
+.stats_container:nth-child(2){
+    background-color: orange;
+}
+.stats_container:nth-child(3){
+    background-color: rgb(38, 85, 38);
+}
+.stats_container:nth-child(4){
+    background-color: purple;
+}
+.stats_container:nth-child(5){
+    background-color: rgb(59, 59, 179);
+}
+.stats_container:nth-child(6){
+    background-color: red;
+}
+.stats_container:nth-child(7){
+    background-color: lightseagreen;
+}

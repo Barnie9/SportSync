@@ -68,8 +68,10 @@ public class UserService {
     }
 
     public void updateUser1(String username, UserDto userDto) {
+        System.out.println("userdto"+userDto);
+        System.out.println("username"+username);
         Optional<User> existingUser = Optional.ofNullable(userRepository.findByUsername(username));
-
+        System.out.println("test"+existingUser);
         if(existingUser.isPresent()) {
             existingUser.get().setUsername(userDto.username());
             existingUser.get().setEmailAddress(userDto.emailAddress());
@@ -81,10 +83,6 @@ public class UserService {
             existingUser.get().setFoot(userDto.foot());
             existingUser.get().setPosition(userDto.position());
             existingUser.get().setProfilePicturePath(userDto.profilePicturePath());
-            existingUser.get().setToken(userDto.token());
-            existingUser.get().setIsConfirmed(userDto.isConfirmed());
-            existingUser.get().setCreatedAt(userDto.createdAt());
-
             userRepository.save(existingUser.get());
         }
     }
