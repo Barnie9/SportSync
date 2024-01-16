@@ -3,7 +3,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 // Icons
-import { CalendarMonth, Grass, LocationOn, People, Sell, WatchLater } from "@mui/icons-material";
+import {
+	CalendarMonth,
+	Grass,
+	LocationOn,
+	People,
+	Sell,
+	WatchLater,
+} from "@mui/icons-material";
 
 // CSS
 import EventPageCSS from "./EventPage.module.css";
@@ -22,6 +29,8 @@ interface Props {
 function EventPage({ onChangeUsername }: Props) {
 	const navigate = useNavigate();
 	const params = useParams();
+
+	const [isLoading, setIsLoading] = useState(true);
 
 	const [event, setEvent] = useState<Event>();
 	const [eventMembers, setEventMembers] = useState<Entry[]>([]);
@@ -53,7 +62,7 @@ function EventPage({ onChangeUsername }: Props) {
 		if (1 + eventMembers.length === event?.maxPlayers!) {
 			alert("Event is full.");
 			return;
-		} 
+		}
 
 		if (username === event?.organizer.username) {
 			alert("You are the organizer of this event.");
@@ -85,6 +94,41 @@ function EventPage({ onChangeUsername }: Props) {
 		createEntry();
 	};
 
+	const handleLeave = () => {
+		const username = localStorage.getItem("username");
+
+		const deleteEntry = async () => {
+			await axios
+				.delete(
+					"http://localhost:8090/entries/eventId=" +
+						event?.id +
+						"&username=" +
+						username
+				)
+				.then(() => {
+					alert("You have left the event.");
+					window.location.reload();
+				})
+				.catch(() => {
+					alert("Failed to leave the event.");
+				});
+		};
+
+		deleteEntry();
+	}
+
+	const verifyIfUserIsMember = () => {
+		const username = localStorage.getItem("username");
+
+		for (let i = 0; i < eventMembers.length; i++) {
+			if (eventMembers[i].user.username === username) {
+				return true;
+			}
+		}
+
+		return false;
+	};
+
 	useEffect(() => {
 		onChangeUsername(localStorage.getItem("username") || "");
 
@@ -93,6 +137,7 @@ function EventPage({ onChangeUsername }: Props) {
 				.get("http://localhost:8090/events/id=" + params.id)
 				.then((response) => {
 					setEvent(response.data);
+					setIsLoading(false);
 				})
 				.catch(() => {
 					setEvent(undefined);
@@ -106,11 +151,23 @@ function EventPage({ onChangeUsername }: Props) {
 					setEventMembers(response.data);
 				})
 				.catch();
-		}
+		};
 
 		getEventById();
 		getEventMembers();
 	}, []);
+
+	if (isLoading)
+		return (
+			<div className={EventPageCSS.page}>
+				<Menu
+					selectedPage="Event"
+					onChangeUsername={onChangeUsername}
+				/>
+
+				<div className={EventPageCSS.content}></div>
+			</div>
+		);
 
 	return (
 		<div className={EventPageCSS.page}>
@@ -119,13 +176,19 @@ function EventPage({ onChangeUsername }: Props) {
 			<div className={EventPageCSS.content}>
 				{event ? (
 					<div className={EventPageCSS.container}>
-						<img src={eventImage} alt="Event" className={EventPageCSS.event_image} />
+						<img
+							src={eventImage}
+							alt="Event"
+							className={EventPageCSS.event_image}
+						/>
 
 						<div className={EventPageCSS.title_container}>
 							<div className={EventPageCSS.date}>
 								{event.startDate}
 							</div>
-							<div className={EventPageCSS.title}>{event.title}</div>
+							<div className={EventPageCSS.title}>
+								{event.title}
+							</div>
 						</div>
 
 						<div className={EventPageCSS.details_container}>
@@ -138,12 +201,27 @@ function EventPage({ onChangeUsername }: Props) {
 								</div>
 
 								<div className={EventPageCSS.buttons_container}>
-									<div className={EventPageCSS.button} onClick={handleJoin}>
-										Join
-									</div>
-									<div className={EventPageCSS.button} onClick={() => {
-										navigate("/members/" + event.id);
-									}}>
+									{verifyIfUserIsMember() ? (
+										<div
+											className={EventPageCSS.button}
+											onClick={handleLeave}
+										>
+											Leave
+										</div>
+									) : (
+										<div
+											className={EventPageCSS.button}
+											onClick={handleJoin}
+										>
+											Join
+										</div>
+									)}
+									<div
+										className={EventPageCSS.button}
+										onClick={() => {
+											navigate("/members/" + event.id);
+										}}
+									>
 										Members
 									</div>
 								</div>
@@ -158,12 +236,20 @@ function EventPage({ onChangeUsername }: Props) {
 								<div className={EventPageCSS.line}>
 									<CalendarMonth fontSize="large" />
 									&nbsp;&nbsp;
-									{event.startDate + ", " + event.startTime.substring(0, event.startTime.lastIndexOf(":"))}
+									{event.startDate +
+										", " +
+										event.startTime.substring(
+											0,
+											event.startTime.lastIndexOf(":")
+										)}
 								</div>
 								<div className={EventPageCSS.line}>
 									<WatchLater fontSize="large" />
 									&nbsp;&nbsp;
-									{computeTime(event.startTime, event.endTime) + " minutes"}
+									{computeTime(
+										event.startTime,
+										event.endTime
+									) + " minutes"}
 								</div>
 								<div className={EventPageCSS.line}>
 									<Grass fontSize="large" />
@@ -178,7 +264,10 @@ function EventPage({ onChangeUsername }: Props) {
 								<div className={EventPageCSS.line}>
 									<People fontSize="large" />
 									&nbsp;&nbsp;
-									{(1 + eventMembers.length) + " / " + event.maxPlayers}
+									{1 +
+										eventMembers.length +
+										" / " +
+										event.maxPlayers}
 								</div>
 							</div>
 						</div>

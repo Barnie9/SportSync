@@ -5,12 +5,13 @@
 }
 .stats_container{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    align-items: center;
     margin:5px;
     border-radius: 15px;
-    width: 50%;
+    height: 70px;
+    width: 60%;
     border:1px solid black;
-    padding:5px;
     color: white;
     font-size: large;
 }
@@ -34,4 +35,18 @@
 }
 .stats_container:nth-child(7){
     background-color: lightseagreen;
+}
+
+.text {
+    font-size: 1.5rem;
+    color: white;
+    text-align: start;
+    width: 50%;
+}
+
+.number {
+    font-size: 1.5rem;
+    color: white;
+    text-align: center;
+    width: 10%;
 }

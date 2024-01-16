@@ -132,6 +132,9 @@ function Menu({ selectedPage, onChangeUsername }: Props) {
 									? MenuCSS["submenu_item_selected"]
 									: MenuCSS["submenu_item"]
 							}
+							onClick={() => {
+								navigate("/my-events");
+							}}
 						>
 							<div className={MenuCSS["menu_item_icon"]}>
 							{selectedPage === "My Events" ? (

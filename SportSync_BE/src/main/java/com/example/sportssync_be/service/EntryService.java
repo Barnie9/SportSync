@@ -35,4 +35,12 @@ public class EntryService {
     public List<Event> findAllEventsOrderedByUserCount(Pageable pageable) {
         return entryRepository.findEventsOrderedByUserCount(pageable);
     }
+
+    public List<EntryDto> getEntriesByUsername(Long userId) {
+        return entryRepository.findByUserId(userId).stream().map(EntryMapper::toDto).toList();
+    }
+
+    public void deleteEntry(Long eventId, Long userId) {
+        entryRepository.delete(entryRepository.findByEventIdAndUserId(eventId, userId));
+    }
 }

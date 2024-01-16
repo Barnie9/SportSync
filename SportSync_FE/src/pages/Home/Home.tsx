@@ -5,9 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
 	faCircleChevronRight,
 	faCircleChevronLeft,
-
 } from "@fortawesome/free-solid-svg-icons";
 import EventCard from "../../components/EventCard/EventCard";
+
+import { ArrowLeft, ArrowRight } from "@mui/icons-material";
 
 // CSS
 import HomeCSS from "./Home.module.css";
@@ -15,12 +16,15 @@ import HomeCSS from "./Home.module.css";
 // Components
 import Menu from "../../components/Menu/Menu";
 import Event from "../../interfaces/Event";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
 	onChangeUsername: (username: string) => void;
 }
 
 function Home({ onChangeUsername }: Props) {
+	const navigate = useNavigate();
+
 	const [recentEvents, setRecentEvents] = useState<Event[]>([]);
 	const [popularEvents, setPopularEvents] = useState<Event[]>([]);
 
@@ -31,44 +35,50 @@ function Home({ onChangeUsername }: Props) {
 
 	useEffect(() => {
 		const getRecentEvents = async () => {
-			await axios.get("http://localhost:8090/events/api/recentevents").then((response) =>{
-				setRecentEvents(response.data)
-				setIsLoading(false);
-
-			}).catch()
+			await axios
+				.get("http://localhost:8090/events/api/recentevents")
+				.then((response) => {
+					setRecentEvents(response.data);
+					setIsLoading(false);
+				})
+				.catch();
 			setIsLoading(false);
 		};
-		
+
 		getRecentEvents();
 
 		const getPopularEvents = async () => {
-			await axios.get("http://localhost:8090/events/api/popularevents").then((response) =>{
-			setPopularEvents(response.data);
-			setIsLoading(false);
-		}).catch()
+			await axios
+				.get("http://localhost:8090/events/api/popularevents")
+				.then((response) => {
+					setPopularEvents(response.data);
+					setIsLoading(false);
+				})
+				.catch();
 			setIsLoading(false);
 		};
-		
+
 		getPopularEvents();
 	}, []);
 
 	if (isLoading) return null;
-	const EVENTS_PER_PAGE = 3;
-	const POPULAR_EVENTS_PER_PAGE = 3;
 
+	const EVENTS_PER_PAGE = 3;
 
 	const totalPages = Math.ceil(recentEvents.length / EVENTS_PER_PAGE);
-	const eventsToShow = recentEvents.slice(currentPage * EVENTS_PER_PAGE, (currentPage + 1) * EVENTS_PER_PAGE);
 
-	const totalPopularPages = Math.ceil(popularEvents.length / POPULAR_EVENTS_PER_PAGE);
+	const totalPopularPages = Math.ceil(
+		popularEvents.length / EVENTS_PER_PAGE
+	);
 
-	const popularEventsToShow = popularEvents.slice(currentPopularPage * POPULAR_EVENTS_PER_PAGE, (currentPopularPage + 1) * POPULAR_EVENTS_PER_PAGE);
 	const handlePopularLeftArrowClick = () => {
 		setCurrentPopularPage((prevPage) => Math.max(prevPage - 1, 0));
 	};
 
 	const handlePopularRightArrowClick = () => {
-		setCurrentPopularPage((prevPage) => Math.min(prevPage + 1, totalPopularPages - 1));
+		setCurrentPopularPage((prevPage) =>
+			Math.min(prevPage + 1, totalPopularPages - 1)
+		);
 	};
 
 	const handleLeftArrowClick = () => {
@@ -78,56 +88,101 @@ function Home({ onChangeUsername }: Props) {
 	const handleRightArrowClick = () => {
 		setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
 	};
-	  
+
 	return (
 		<>
 			<div className={HomeCSS.page}>
 				<Menu selectedPage="Home" onChangeUsername={onChangeUsername} />
-				<div className={HomeCSS.container}>
 
-			
+				<div className={HomeCSS.content}>
+					<div className={HomeCSS.container}>
+						<div className={HomeCSS.title}>Recent Events</div>
 
-					<div className={HomeCSS.recentEvents}>
-						<div className={HomeCSS.rE_title}>
-							<p>Recent Events</p>
-						</div>
-
-						<div className={HomeCSS.rE_content}>
-							<div className={HomeCSS.rE_leftArrow}>
-								<a onClick={handleLeftArrowClick}><FontAwesomeIcon icon={faCircleChevronLeft} size="2xl" /></a>
-							</div>
-							{eventsToShow.map(event =>( 
-								    <EventCard key={event.id} event={event} />
-								))}
-							<div className={HomeCSS.rE_rightArrow}>
-								<a onClick={handleRightArrowClick}><FontAwesomeIcon icon={faCircleChevronRight} size="2xl" /></a>
+						<div className={HomeCSS.page_container}>
+							<div
+								className={HomeCSS.arrow}
+								onClick={handleLeftArrowClick}
+							>
+								<ArrowLeft
+									sx={{ fontSize: "80px", color: "#969ab6" }}
+								/>
 							</div>
 
+							<div className={HomeCSS.events_container}>
+								{recentEvents.map((event, index) => {
+									if (
+										index >= currentPage * 3 &&
+										index < (currentPage + 1) * 3
+									) {
+										return (
+											<div
+												className={HomeCSS.event_card}
+												onClick={() => {
+													navigate(
+														"/event/" + event.id
+													);
+												}}
+											>
+												<EventCard event={event} />
+											</div>
+										);
+									} else return null;
+								})}
+							</div>
+
+							<div
+								className={HomeCSS.arrow}
+								onClick={handleRightArrowClick}
+							>
+								<ArrowRight
+									sx={{ fontSize: "80px", color: "#969ab6" }}
+								/>
+							</div>
 						</div>
-
-
 					</div>
 
-					<div className={HomeCSS.popular}>
-						<div className={HomeCSS.popular_title}>
-							<p>Popular Right Now</p>
+					<div className={HomeCSS.container}>
+						<div className={HomeCSS.title}>Most Popular Events</div>
+
+						<div className={HomeCSS.page_container}>
+							<div
+								className={HomeCSS.arrow}
+								onClick={handlePopularLeftArrowClick}
+							>
+								<ArrowLeft
+									sx={{ fontSize: "80px", color: "#969ab6" }}
+								/>
+							</div>
+
+							{popularEvents.map((event, index) => {
+									if (
+										index >= currentPopularPage * 3 &&
+										index < (currentPopularPage + 1) * 3
+									) {
+										return (
+											<div
+												className={HomeCSS.event_card}
+												onClick={() => {
+													navigate(
+														"/event/" + event.id
+													);
+												}}
+											>
+												<EventCard event={event} />
+											</div>
+										);
+									} else return null;
+								})}
+
+							<div
+								className={HomeCSS.arrow}
+								onClick={handlePopularRightArrowClick}
+							>
+								<ArrowRight
+									sx={{ fontSize: "80px", color: "#969ab6" }}
+								/>
+							</div>
 						</div>
-
-						<div className={HomeCSS.popular_content}>
-
-						<div className={HomeCSS.popular_leftArrow}>
-								<a onClick={handlePopularLeftArrowClick}><FontAwesomeIcon icon={faCircleChevronLeft} size="2xl" /></a>
-						</div>
-
-						{popularEventsToShow.map(event =>( 
-								    <EventCard key={event.id} event={event} />
-								))}
-
-						<div className={HomeCSS.popular_rightArrow}>
-								<a onClick={handlePopularRightArrowClick}><FontAwesomeIcon icon={faCircleChevronRight} size="2xl" /></a>
-						</div>
-
-					</div>
 					</div>
 				</div>
 			</div>

@@ -1,5 +1,6 @@
 package com.example.sportssync_be.repository;
 
+import com.example.sportssync_be.dto.EntryDto;
 import com.example.sportssync_be.entity.Entry;
 import com.example.sportssync_be.entity.Event;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +19,8 @@ public interface EntryRepository extends JpaRepository<Entry, Long> {
             "GROUP BY e.event " +
             "ORDER BY COUNT(e.user) DESC")
     List<Event> findEventsOrderedByUserCount(Pageable pageable);
+
+    List<Entry> findByUserId(Long userId);
+
+    Entry findByEventIdAndUserId(Long eventId, Long userId);
 }

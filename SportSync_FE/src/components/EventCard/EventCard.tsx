@@ -10,12 +10,29 @@ import Field from "../../images/field.png";
 
 // Interfaces
 import Event from "../../interfaces/Event";
+import Entry from "../../interfaces/Entry";
+import { useEffect, useState } from "react";
 
 interface Props {
     event: Event;
 }
 
 function EventCard({ event }: Props) {
+    const [members, setMembers] = useState<Entry[]>([]);
+
+    useEffect(() => {
+        const getMembers = async () => {
+            await fetch("http://localhost:8090/entries/eventId=" + event.id)
+                .then((response) => response.json())
+                .then((data) => {
+                    setMembers(data);
+                })
+                .catch();
+        };
+
+        getMembers();
+    }, []);
+
 	return (
 		<div className={EventCardCSS.card}>
 			<img src={Field} alt="Field" className={EventCardCSS.image} />
@@ -37,7 +54,7 @@ function EventCard({ event }: Props) {
 
                     <div className={EventCardCSS.text_right}>
                         <Group />
-                        {event.maxPlayers}
+                        {1 + members.length + "/" + event.maxPlayers}
                     </div>
 
                     <div className={EventCardCSS.text_left}>
@@ -47,7 +64,7 @@ function EventCard({ event }: Props) {
 
                     <div className={EventCardCSS.text_right}>
                         <Sell />
-                        {event.price + "€"}
+                        {event.price}
                     </div>
                 </div>
             </div>

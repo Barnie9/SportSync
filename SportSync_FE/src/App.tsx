@@ -16,6 +16,7 @@ import Profile from "./pages/Profile/Profile";
 import MyEvents from "./pages/MyEvents/MyEvents";
 import EventPage from "./pages/EventPage/EventPage";
 import EventMembersPage from "./pages/EventMembersPage/EventMembersPage";
+import CreateEventPage from "./pages/CreateEventPage/CreateEventPage";
 
 interface Props {
 	setUsername: (username: string) => void;
@@ -66,6 +67,8 @@ function PrivateRoute({ setUsername }: Props) {
 				<Route path="/event/:id" element={<EventPage onChangeUsername={(value) => setUsername(value)} />} />
 
 				<Route path="/members/:id" element={<EventMembersPage onChangeUsername={(value) => setUsername(value)} />} />
+
+				<Route path="/create-event" element={<CreateEventPage onChangeUsername={(value) => setUsername(value)} />} />
 
 				<Route path="*" element={<Navigate to="/" />} />
 			</Routes>
@@ -129,6 +132,8 @@ function PublicRoute({ setUsername }: Props) {
 				<Route path="/event/:id" element={<EventPage onChangeUsername={(value) => setUsername(value)} />} />
 
 				<Route path="/members/:id" element={<EventMembersPage onChangeUsername={(value) => setUsername(value)} />} />
+
+				<Route path="/create-event" element={<Navigate to="/" />} />
 
 				<Route path="*" element={<Navigate to="/" />} />
 			</Routes>

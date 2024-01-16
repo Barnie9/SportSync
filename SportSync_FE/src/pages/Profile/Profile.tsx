@@ -207,24 +207,7 @@ function Profile({ onChangeUsername }: Props) {
 									/>
 								</div>
 
-								<div className={ProfileCSS.item}>
-									<div className={ProfileCSS.label}>
-										Password:
-									</div>
-									<input
-										className={
-											passwordError === ""
-												? ProfileCSS.input
-												: ProfileCSS.input_error
-										}
-										type="password"
-										placeholder="..."
-										value={password}
-										onChange={(event) => {
-											setPassword(event.target.value);
-										}}
-									/>
-								</div>
+								
 
 								<div className={ProfileCSS.item}>
 									<div className={ProfileCSS.label}>
@@ -238,6 +221,37 @@ function Profile({ onChangeUsername }: Props) {
 											setBirthDate(event.target.value);
 										}}
 									/>
+								</div>
+
+								<div className={ProfileCSS.item}>
+									<div className={ProfileCSS.label}>
+										Position:
+									</div>
+									<select
+										className={
+											positionError === ""
+												? ProfileCSS.input
+												: ProfileCSS.input_error
+										}
+										value={position}
+										onChange={(event) => {
+											setPosition(event.target.value);
+										}}
+									>
+										<option value="" disabled>
+											Select Position
+										</option>
+										<option value="Goalkeeper">
+											Goalkeeper
+										</option>
+										<option value="Midfielder">
+											Midfielder
+										</option>
+										<option value="Striker">Striker</option>
+										<option value="Defender">
+											Defender
+										</option>
+									</select>
 								</div>
 							</div>
 
@@ -262,33 +276,21 @@ function Profile({ onChangeUsername }: Props) {
 
 								<div className={ProfileCSS.item}>
 									<div className={ProfileCSS.label}>
-										Position:
+										Password:
 									</div>
-									<select
+									<input
 										className={
-											positionError === ""
+											passwordError === ""
 												? ProfileCSS.input
 												: ProfileCSS.input_error
 										}
-										value={position}
+										type="password"
+										placeholder="..."
+										value={password}
 										onChange={(event) => {
-											setPosition(event.target.value);
+											setPassword(event.target.value);
 										}}
-									>
-										<option value="">
-											Select Position
-										</option>
-										<option value="Goalkeeper">
-											Goalkeeper
-										</option>
-										<option value="Midfielder">
-											Midfielder
-										</option>
-										<option value="Striker">Striker</option>
-										<option value="Defender">
-											Defender
-										</option>
-									</select>
+									/>
 								</div>
 
 								<div className={ProfileCSS.item}>
@@ -323,7 +325,7 @@ function Profile({ onChangeUsername }: Props) {
 											setFoot(event.target.value);
 										}}
 									>
-										<option value="">Select Foot</option>
+										<option value="" disabled>Select Foot</option>
 										<option value="Left">Left</option>
 										<option value="Right">Right</option>
 										<option value="Both">Both</option>
