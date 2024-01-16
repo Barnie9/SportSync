@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import com.example.sportssync_be.entity.Event;
+import org.springframework.data.domain.Pageable;
 
 @Service
 @RequiredArgsConstructor
@@ -28,5 +30,9 @@ public class EntryService {
 
         EntryDto entryDto = new EntryDto(null, eventDto, userDto);
         entryRepository.save(EntryMapper.toEntity(entryDto));
+    }
+
+    public List<Event> findAllEventsOrderedByUserCount(Pageable pageable) {
+        return entryRepository.findEventsOrderedByUserCount(pageable);
     }
 }

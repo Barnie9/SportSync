@@ -19,6 +19,7 @@ public class EntryMapper {
             return null;
         }
 
+
         return new Entry(entryDto.id(), EventMapper.toEntity(entryDto.event()), UserMapper.toEntity(entryDto.user()));
     }
 }

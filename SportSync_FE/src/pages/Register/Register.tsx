@@ -65,7 +65,7 @@ function Register({ onChangeUsername }: Props) {
 				password === "" ||
 				confirmPassword === ""
 			) {
-				alert("Please fill out all fields");
+				alert("Please fill out all fields!");
 				return;
 			}
 

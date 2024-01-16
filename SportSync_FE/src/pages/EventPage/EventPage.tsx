@@ -141,11 +141,14 @@ function EventPage({ onChangeUsername }: Props) {
 									<div className={EventPageCSS.button} onClick={handleJoin}>
 										Join
 									</div>
-									<div className={EventPageCSS.button}>
+									<div className={EventPageCSS.button} onClick={() => {
+										navigate("/members/" + event.id);
+									}}>
 										Members
 									</div>
 								</div>
 							</div>
+
 							<div className={EventPageCSS.right_container}>
 								<div className={EventPageCSS.line}>
 									<LocationOn fontSize="large" />
@@ -170,7 +173,7 @@ function EventPage({ onChangeUsername }: Props) {
 								<div className={EventPageCSS.line}>
 									<Sell fontSize="large" />
 									&nbsp;&nbsp;
-									{event.price}
+									{event.price + " RON"}
 								</div>
 								<div className={EventPageCSS.line}>
 									<People fontSize="large" />
