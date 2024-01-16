@@ -12,28 +12,28 @@ function Stats({ rating }: Props) {
 	return (
 		<div className={StatsCSS.statistics_container}>
 			<div className={StatsCSS.stats_container}>
-				<p>Pace </p>
-				<p>{rating?.pace}</p>
+				<div className={StatsCSS.text}>Pace </div>
+				<div className={StatsCSS.number}>{rating?.pace}</div>
 			</div>
 			<div className={StatsCSS.stats_container}>
-				<p>Shooting </p>
-				<p>{rating?.shooting}</p>
+				<div className={StatsCSS.text}>Shooting </div>
+				<div className={StatsCSS.number}>{rating?.shooting}</div>
 			</div>
 			<div className={StatsCSS.stats_container}>
-				<p>Passing </p>
-				<p>{rating?.passing}</p>
+				<div className={StatsCSS.text}>Passing </div>
+				<div className={StatsCSS.number}>{rating?.passing}</div>
 			</div>
 			<div className={StatsCSS.stats_container}>
-				<p>Dribbling </p>
-				<p>{rating?.dribbling}</p>
+				<div className={StatsCSS.text}>Dribbling </div>
+				<div className={StatsCSS.number}>{rating?.dribbling}</div>
 			</div>
 			<div className={StatsCSS.stats_container}>
-				<p>Defending </p>
-				<p>{rating?.defending}</p>
+				<div className={StatsCSS.text}>Defending </div>
+				<div className={StatsCSS.number}>{rating?.defending}</div>
 			</div>
 			<div className={StatsCSS.stats_container}>
-				<p>Physical </p>
-				<p>{rating?.physical}</p>
+				<div className={StatsCSS.text}>Physical </div>
+				<div className={StatsCSS.number}>{rating?.physical}</div>
 			</div>
 		</div>
 	);

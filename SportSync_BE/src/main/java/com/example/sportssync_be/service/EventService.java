@@ -37,6 +37,15 @@ public class EventService {
             System.out.println("test111");
         }
         return events;
+    }
 
+    public List<EventDto> getEventsByCreatedBy(Long userId) {
+        System.out.println(eventRepository.findByOrganizerId(userId).stream().map(EventMapper::toDto).toList());
+
+        return eventRepository.findByOrganizerId(userId).stream().map(EventMapper::toDto).toList();
+    }
+
+    public void createEvent(EventDto eventDto) {
+        eventRepository.save(EventMapper.toEntity(eventDto));
     }
 }
